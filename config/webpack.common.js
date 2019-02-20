@@ -38,30 +38,8 @@ module.exports = {
       },
 
       // SCSS files
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                'sourceMap': true,
-                'importLoaders': 1
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [
-                  autoprefixer
-                ]
-              }
-            },
-            'sass-loader'
-          ]
-        })
-      }
+      { test: /\.scss/, exclude: /node_modules/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap&includePaths[]=node_modules/compass-mixins/lib'},
+{ test: /\.css$/, loader: 'style-loader!css-loader' },
     ]
   },
 
