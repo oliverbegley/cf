@@ -25,7 +25,8 @@ export default class Example extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      query: ''
     };
   }
   toggle() {
@@ -33,10 +34,15 @@ export default class Example extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  search(){
+    console.log('this.state', this.state);
+  }
+
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar color="light" light expand="md" style={{height: "10%"}}>
           <NavbarBrand href="/">ComFact</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Form inline style={{marginLeft:"40px"}}> 
@@ -46,9 +52,11 @@ export default class Example extends React.Component {
                 name="search"
                 id="search"
                 placeholder="search here..."
+                value={this.state.query}
+                onChange={event => {this.setState({query: event.target.value})}}
               />
             </FormGroup>
-            <Button>Submit</Button>
+            <Button color="primary" onClick={()=>this.search()}>Search</Button>
           </Form>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
