@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App = ({ children }) => (
   <>
     <Header />
-
     <main>
       {children}
     </main>

@@ -1,9 +1,16 @@
-import React, { Component } from 'react';
-import 'whatwg-fetch';
+import React, { Component } from "react";
+import "whatwg-fetch";
+import { setInStorage, getFromStorage } from "../../utils/storage.js";
 import {
-  setInStorage,
-  getFromStorage,
-} from '../../utils/storage.js';
+  Alert,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText,
+  Jumbotron
+} from "reactstrap";
 
 class Home extends Component {
   constructor(props) {
@@ -11,31 +18,39 @@ class Home extends Component {
 
     this.state = {
       isLoading: true,
-      token: '',
-      signUpError: '',
-      signInError: '',
-      signInEmail: '',
-      signInPassword: '',
-      signUpEmail: '',
-      signUpPassword: '',
+      token: "",
+      signUpError: "",
+      signInError: "",
+      signInEmail: "",
+      signInPassword: "",
+      signUpEmail: "",
+      signUpPassword: ""
     };
 
-    this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(this);
-    this.onTextboxChangeSignInPassword = this.onTextboxChangeSignInPassword.bind(this);
-    this.onTextboxChangeSignUpEmail = this.onTextboxChangeSignUpEmail.bind(this);
-    this.onTextboxChangeSignUpPassword = this.onTextboxChangeSignUpPassword.bind(this);
-    
+    this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(
+      this
+    );
+    this.onTextboxChangeSignInPassword = this.onTextboxChangeSignInPassword.bind(
+      this
+    );
+    this.onTextboxChangeSignUpEmail = this.onTextboxChangeSignUpEmail.bind(
+      this
+    );
+    this.onTextboxChangeSignUpPassword = this.onTextboxChangeSignUpPassword.bind(
+      this
+    );
+
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
-    const obj = getFromStorage('ComFact');
+    const obj = getFromStorage("ComFact");
     if (obj && obj.token) {
       const { token } = obj;
       // Verify token
-      fetch('/api/account/verify?token=' + token)
+      fetch("/api/account/verify?token=" + token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
@@ -45,76 +60,74 @@ class Home extends Component {
             });
           } else {
             this.setState({
-              isLoading: false,
+              isLoading: false
             });
           }
         });
     } else {
       this.setState({
-        isLoading: false,
+        isLoading: false
       });
     }
   }
 
   onTextboxChangeSignInEmail(event) {
     this.setState({
-      signInEmail: event.target.value,
+      signInEmail: event.target.value
     });
   }
 
   onTextboxChangeSignInPassword(event) {
     this.setState({
-      signInPassword: event.target.value,
+      signInPassword: event.target.value
     });
   }
 
   onTextboxChangeSignUpEmail(event) {
     this.setState({
-      signUpEmail: event.target.value,
+      signUpEmail: event.target.value
     });
   }
 
   onTextboxChangeSignUpPassword(event) {
     this.setState({
-      signUpPassword: event.target.value,
+      signUpPassword: event.target.value
     });
   }
 
   onSignUp() {
     // Grab state
-    const {
-      signUpEmail,
-      signUpPassword,
-    } = this.state;
+    const { signUpEmail, signUpPassword } = this.state;
 
     this.setState({
-      isLoading: true,
+      isLoading: true
     });
 
     // Post request to backend
-    fetch('/api/account/signup', {
-      method: 'POST',
+    fetch("/api/account/signup", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         email: signUpEmail,
-        password: signUpPassword,
-      }),
-    }).then(res => res.json())
+        password: signUpPassword
+      })
+    })
+      .then(res => res.json())
       .then(json => {
-        console.log('json', json);
+        console.log("json", json);
         if (json.success) {
           this.setState({
             signUpError: json.message,
             isLoading: false,
-            signUpEmail: '',
-            signUpPassword: '',
+            signUpEmail: "",
+            signUpPassword: ""
           });
         } else {
           this.setState({
             signUpError: json.message,
-            isLoading: false,
+            isLoading: false
           });
         }
       });
@@ -122,39 +135,37 @@ class Home extends Component {
 
   onSignIn() {
     // Grab state
-    const {
-      signInEmail,
-      signInPassword,
-    } = this.state;
+    const { signInEmail, signInPassword } = this.state;
     this.setState({
-      isLoading: true,
+      isLoading: true
     });
     // Post request to backend
-    fetch('/api/account/signin', {
-      method: 'POST',
+    fetch("/api/account/signin", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         email: signInEmail,
-        password: signInPassword,
-      }),
-    }).then(res => res.json())
+        password: signInPassword
+      })
+    })
+      .then(res => res.json())
       .then(json => {
-        console.log('json', json);
+        console.log("json", json);
         if (json.success) {
-          setInStorage('the_main_app', { token: json.token });
+          setInStorage("the_main_app", { token: json.token });
           this.setState({
             signInError: json.message,
             isLoading: false,
-            signInPassword: '',
-            signInEmail: '',
-            token: json.token,
+            signInPassword: "",
+            signInEmail: "",
+            token: json.token
           });
         } else {
           this.setState({
             signInError: json.message,
-            isLoading: false,
+            isLoading: false
           });
         }
       });
@@ -162,29 +173,29 @@ class Home extends Component {
 
   logout() {
     this.setState({
-      isLoading: true,
+      isLoading: true
     });
-    const obj = getFromStorage('the_main_app');
+    const obj = getFromStorage("the_main_app");
     if (obj && obj.token) {
       const { token } = obj;
       // Verify token
-      fetch('/api/account/logout?token=' + token)
+      fetch("/api/account/logout?token=" + token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
             this.setState({
-              token: '',
+              token: "",
               isLoading: false
             });
           } else {
             this.setState({
-              isLoading: false,
+              isLoading: false
             });
           }
         });
     } else {
       this.setState({
-        isLoading: false,
+        isLoading: false
       });
     }
   }
@@ -198,38 +209,49 @@ class Home extends Component {
       signInPassword,
       signUpEmail,
       signUpPassword,
-      signUpError,
+      signUpError
     } = this.state;
 
     if (isLoading) {
-      return (<div><p>Loading...</p></div>);
+      return (
+        <div>
+          <p>Loading...</p>
+        </div>
+      );
     }
 
     if (!token) {
       return (
         <div>
-          <div style={{padding:'50px'}}>
-            {
-              (signUpError) ? (
-                <p>{signUpError}</p>
-              ) : (null)
-            }
-            <h3>Sign Up</h3>
-            <input
-              type="email"
-              placeholder="Email"
-              value={signUpEmail}
-              onChange={this.onTextboxChangeSignUpEmail}
-            /><br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={signUpPassword}
-              onChange={this.onTextboxChangeSignUpPassword}
-            /><br />
-            <button onClick={this.onSignUp}>Sign Up</button>
-          </div>
+          <div style={{ padding: "50px" }}>
+            {signUpError ? <Alert color="danger">{signUpError}</Alert> : null}
+            {console.log(signUpError)}
 
+            <Jumbotron>
+              <h2>Sign Up</h2>
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input
+                type="email"
+                placeholder="Email"
+                value={signUpEmail}
+                onChange={this.onTextboxChangeSignUpEmail}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="password">Password</Label>
+                <Input
+                type="password"
+                placeholder="Password"
+                value={signUpPassword}
+                onChange={this.onTextboxChangeSignUpPassword}
+                />
+              </FormGroup>
+              <Button color="primary" onClick={this.onSignUp}>
+                Sign Up
+              </Button>
+            </Jumbotron>
+          </div>
         </div>
       );
     }
