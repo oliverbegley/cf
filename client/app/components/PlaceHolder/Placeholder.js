@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {Jumbotron, Button} from 'reactstrap';
+import {Jumbotron} from 'reactstrap';
 
 const Home = () => (
   <div style={{ height:"100%"}}>
