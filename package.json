@@ -48,5 +48,9 @@
     "webpack-hot-middleware": "^2.21.2",
     "webpack-merge": "^4.1.2",
     "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "file-loader": "^3.0.1",
+    "image-webpack-loader": "^4.6.0"
   }
 }

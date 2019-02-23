@@ -12,6 +12,8 @@ import {
   Jumbotron
 } from "reactstrap";
 
+import loading from '../../../public/assets/gif/loading.gif';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -215,6 +217,7 @@ class Home extends Component {
     if (isLoading) {
       return (
         <div>
+          <img src={loading} />
           <p>Loading...</p>
         </div>
       );
@@ -225,32 +228,52 @@ class Home extends Component {
         <div>
           <div style={{ padding: "50px" }}>
             {signUpError ? <Alert color="danger">{signUpError}</Alert> : null}
-            {console.log(signUpError)}
 
-            <Jumbotron>
               <h2>Sign Up</h2>
+              <FormGroup>
+                <Label for="firstName">First Name</Label>
+                <Input
+                  type="email"
+                  placeholder="First Name"
+                  value={signUpEmail}
+                  onChange={this.onTextboxChangeSignUpEmail}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="email">Surname</Label>
+                <Input
+                  type="email"
+                  placeholder="Surname"
+                  value={signUpEmail}
+                  onChange={this.onTextboxChangeSignUpEmail}
+                />
+              </FormGroup>
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
-                type="email"
-                placeholder="Email"
-                value={signUpEmail}
-                onChange={this.onTextboxChangeSignUpEmail}
+                  type="email"
+                  placeholder="Email"
+                  value={signUpEmail}
+                  onChange={this.onTextboxChangeSignUpEmail}
                 />
               </FormGroup>
               <FormGroup>
                 <Label for="password">Password</Label>
                 <Input
-                type="password"
-                placeholder="Password"
-                value={signUpPassword}
-                onChange={this.onTextboxChangeSignUpPassword}
+                  type="password"
+                  placeholder="Password"
+                  value={signUpPassword}
+                  onChange={this.onTextboxChangeSignUpPassword}
                 />
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type="checkbox" /> By Signing up I agree that this website is a load of shite
+                </Label>
               </FormGroup>
               <Button color="primary" onClick={this.onSignUp}>
                 Sign Up
               </Button>
-            </Jumbotron>
           </div>
         </div>
       );

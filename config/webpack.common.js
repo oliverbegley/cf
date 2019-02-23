@@ -36,10 +36,21 @@ module.exports = {
         include: helpers.root('client'),
         loader: 'babel-loader'
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [{
+            loader: 'file-loader',
+            options: {}
+        }]
+    },
 
       // SCSS files
       { test: /\.scss/, exclude: /node_modules/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap&includePaths[]=node_modules/compass-mixins/lib'},
-{ test: /\.css$/, loader: 'style-loader!css-loader' },
+
     ]
   },
 

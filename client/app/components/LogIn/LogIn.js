@@ -14,6 +14,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import loading from '../../../public/assets/gif/loading.gif';
 
 class LogIn extends Component {
   constructor(props) {
@@ -159,6 +160,7 @@ class LogIn extends Component {
       return (
         <div>
           <p>Loading...</p>
+          <img src={loading} />
         </div>
       );
     }
@@ -212,3 +214,4 @@ class LogIn extends Component {
 }
 
 export default LogIn;
+ 
