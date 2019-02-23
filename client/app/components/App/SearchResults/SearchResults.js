@@ -1,57 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Jumbotron } from "reactstrap";
+import {Jumbotron} from 'reactstrap';
 
-class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      results: [],
-      term: ""
-    };
+class SearchResults extends React.Component {
 
-    this.submit = this.submit.bind(this);
-    this.changeTerm = this.changeTerm.bind(this);
-  }
+    render(){
+        return(
+  <div style={{ height:"100%"}}>
+  <Jumbotron style={{  position: "absolute", top: "50%",left: "50%",transform: "translate(-50%, -50%)"}}>
+    <h2>SEARCH RESULTS PLACEHOLDER</h2>
+    </Jumbotron>
+  </div>
+)}};
 
-  changeTerm(event) {
-    this.setState({ term: event.target.value });
-  }
-
-  submit(event) {
-    let url =
-      "http://api.example.com/results?q=" +
-      encodeURI(this.state.term) +
-      "&json=1";
-    axios
-      .get(url)
-      .then(response => {
-        let data = {
-          results: response.data
-        };
-        this.setState(data);
-      })
-      .catch(error => console.log(error));
-  }
-
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.submit}>
-          <input onChange={this.changeTerm} />
-          <Button type="submit" bsStyle="primary">
-            Find
-          </Button>
-        </form>
-        {this.state.results.length > 0 && (
-          <Redirect
-            to={{
-              pathname: "/results",
-              state: { results: this.state.results }
-            }}
-          />
-        )}
-      </div>
-    );
-  }
-}
+export default SearchResults;

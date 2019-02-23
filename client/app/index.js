@@ -18,6 +18,7 @@ import LogIn from './components/LogIn/LogIn';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SearchResults from './components/App/SearchResults/SearchResults';
 
 render((
   <Router>
@@ -26,6 +27,7 @@ render((
         <Route exact path="/" component={Home}/>
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={LogIn} />
+        <Route path="/searchresults/:searchstring" component={SearchResults}/>
         <Route component={NotFound}/>
       </Switch>
     </App>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 import {
   Collapse,
   Navbar,
@@ -19,11 +19,12 @@ import {
   InputGroupAddon
 } from "reactstrap";
 
-export default class Example extends React.Component {
+export default class Header extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.onSearch = this.onSearch.bind(this);
     this.state = {
       isOpen: false,
       query: ''
@@ -35,9 +36,10 @@ export default class Example extends React.Component {
     });
   }
 
-  search(){
+  onSearch(){
     console.log('this.state', this.state);
-  }
+
+    }
 
   render() {
     return (
@@ -55,8 +57,9 @@ export default class Example extends React.Component {
                 value={this.state.query}
                 onChange={event => {this.setState({query: event.target.value})}}
               />
+              
             </FormGroup>
-            <Button color="primary" onClick={()=>this.search()}>Search</Button>
+            <Button href={'searchresults/'+this.state.query} color="primary" onClick={this.onSearch}>Search</Button>
           </Form>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
