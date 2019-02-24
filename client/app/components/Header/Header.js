@@ -47,20 +47,6 @@ export default class Header extends React.Component {
         <Navbar color="light" light expand="md" style={{height: "10%"}}>
           <NavbarBrand href="/">ComFact</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Form inline style={{marginLeft:"40px"}}> 
-            <FormGroup>
-              <Input
-                type="search"
-                name="search"
-                id="search"
-                placeholder="search here..."
-                value={this.state.query}
-                onChange={event => {this.setState({query: event.target.value})}}
-              />
-              
-            </FormGroup>
-            <Button href={'searchresults/'+this.state.query} color="primary" onClick={this.onSearch}>Search</Button>
-          </Form>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
