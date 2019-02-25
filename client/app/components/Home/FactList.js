@@ -2,23 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron } from "reactstrap";
 
-class IssueFilter extends React.Component {
-  render() {
-    return (
-      <div>This is a placeholder for the Issue Filter.</div>
-    )
-  }
-}
-
 const IssueRow = (props) => (
   <tr>
     <td>{props.issue.id}</td>
-    <td>{props.issue.status}</td>
-    <td>{props.issue.owner}</td>
-    <td>{props.issue.created.toDateString()}</td>
-    <td>{props.issue.effort}</td>
-    <td>{props.issue.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
     <td>{props.issue.title}</td>
+    <td>{props.issue.subject}</td>
+    <td>{props.issue.description}</td>
   </tr>
 )
 
@@ -29,12 +18,8 @@ function IssueTable(props) {
       <thead>
         <tr>
           <th>Id</th>
-          <th>Status</th>
-          <th>Owner</th>
-          <th>Created</th>
-          <th>Effort</th>
-          <th>Completion Date</th>
           <th>Title</th>
+          <th>Subject</th>
         </tr>
       </thead>
       <tbody>{issueRows}</tbody>
@@ -45,15 +30,38 @@ function IssueTable(props) {
 
 const issues = [
   {
-    id: 1, status: 'Open', owner: 'Ravan',
-    created: new Date('2016-08-15'), effort: 5, completionDate: undefined,
-    title: 'Error in console when clicking Add',
+    id: 0,
+    title: "TestFact",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at aliquam sed, pulvinar nec lectus. Nunc nec neque dui. Praesent rutrum tortor ex, a ullamcorper ipsum bibendum quis. Morbi ullamcorper vulputate lorem non consectetur. Aliquam non.",
+    userId: "",
+    creationDate: "",
+    subject: "Meme",
+    upvoters: ["Peter", "Graham", "Joel"],
+    downvoters: ["Saul", "Alex", "PublicEnemE"],
+    evidence: ["evidence1", "evidence2", "evidence2"]
   },
   {
-    id: 2, status: 'Assigned', owner: 'Eddie',
-    created: new Date('2016-08-16'), effort: 14, completionDate: new Date('2016-08-30'),
-    title: 'Missing bottom border on panel',
+    id: 1,
+    title: "Another One",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at aliquam sed, pulvinar nec lectus. Nunc nec neque dui. Praesent rutrum tortor ex, a ullamcorper ipsum bibendum quis. Morbi ullamcorper vulputate lorem non consectetur. Aliquam non.",
+    userId: "",
+    creationDate: "",
+    subject: "Sport",
+    upvoters: ["Iain", "Craig", "Bob"],
+    downvoters: ["Lain", "Garry", "Shaun"],
+    evidence: ["e1", "e2", "e3"]
   },
+  {
+    id: 3,
+    title: "All you can hear is these YEOS",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at aliquam sed, pulvinar nec lectus. Nunc nec neque dui. Praesent rutrum tortor ex, a ullamcorper ipsum bibendum quis. Morbi ullamcorper vulputate lorem non consectetur. Aliquam non.",
+    userId: "",
+    creationDate: "",
+    subject: "Politics",
+    upvoters: ["Alan", "Alice", "Arvile"],
+    downvoters: ["Adonis", "Arge", "Axl"],
+    evidence: ["d1", "d2", "dnsands"]
+  }
 ];
 
 class IssueList extends React.Component {
@@ -85,8 +93,6 @@ class IssueList extends React.Component {
     return (
       <div>
         <h1>Issue Tracker</h1>
-        <IssueFilter />
-        <hr />
         <IssueTable issues={this.state.issues} />
       </div>
     );
