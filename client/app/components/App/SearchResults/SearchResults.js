@@ -14,8 +14,6 @@ class SearchResults extends Component {
     };
   }
 
-
-
   componentDidMount() {
     this.setState({isLoading: false})
     console.log("this.state", this.state);

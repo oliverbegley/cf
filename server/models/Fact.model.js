@@ -12,5 +12,21 @@ const FactSchema = new mongoose.Schema({
     type: Date,
     default: ''
   },
+  subject:{
+    type: String,
+    default:''
+  },
+  upvoters: {
+    type: Array,
+    default: ''
+  },
+  downvoters: {
+    type: Array,
+    default: ''
+  },
+  evidence: {
+    type: Array,
+    default: ''
+  }
 });
 module.exports = mongoose.model('Fact', FactSchema);
