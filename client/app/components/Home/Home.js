@@ -13,7 +13,10 @@ import {
   InputGroup
 } from "reactstrap";
 
+
 import SearchResults from "../App/SearchResults/SearchResults";
+import FactList from "./FactList";
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +24,8 @@ class Home extends React.Component {
     this.onSearch = this.onSearch.bind(this);
     this.state = {
       query: "",
-      isLoading: false
+      isLoading: false,
+      facts: []
     };
   }
 
@@ -30,8 +34,27 @@ class Home extends React.Component {
     this.setState({ isLoading: true });
   }
 
+  componentDidMount() {
+    console.log("helo");
+    fetch("/api/fact/facts")
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({
+          facts: data,
+          query: ""
+        });
+        
+      })
+      .catch(err => {
+        // Do something for an error here
+      });
+      console.log(this.state);
+  }
+
   render() {
-    const { query, isLoading } = this.state;
+    const { query,facts, isLoading } = this.state;
 
     if (isLoading) {
       return (
@@ -44,8 +67,8 @@ class Home extends React.Component {
     return (
       <Container style={{ marginTop: "10px" }}>
         <Form>
-          <FormGroup row >
-            <InputGroup style={{ margin: "10px", borderRadius:"20px"}}>
+          <FormGroup row>
+            <InputGroup style={{ margin: "10px", borderRadius: "20px" }}>
               <Input
                 type="search"
                 name="search"
@@ -57,26 +80,14 @@ class Home extends React.Component {
                 }}
               />
               <InputGroupAddon addonType="prepend">
-                <Button
-                  color="primary"
-                  onClick={this.onSearch}
-                >
+                <Button color="primary" onClick={this.onSearch}>
                   Search
                 </Button>
               </InputGroupAddon>
             </InputGroup>
           </FormGroup>
         </Form>
-        <Jumbotron
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)"
-          }}
-        >
-          <h2>HOME PLACEHOLDER</h2>
-        </Jumbotron>
+        <FactList/>
       </Container>
     );
   }
