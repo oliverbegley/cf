@@ -2,37 +2,29 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron } from "reactstrap";
 
-const IssueRow = (props) => (
-  <tr>
-    <td>{props.issue.id}</td>
-    <td>{props.issue.title}</td>
-    <td>{props.issue.subject}</td>
-    <td>{props.issue.description}</td>
-  </tr>
-)
+const FactRow = props => (
+  <Jumbotron>
+    <h4>{props.fact.title}</h4>
+    <p>{props.fact.subject}</p>
+    <p>{props.fact.description}</p>
+  </Jumbotron>
+);
 
-function IssueTable(props) {
-  const issueRows = props.issues.map(issue => <IssueRow key={issue.id} issue={issue} />)
+function FactTable(props) {
+  const factRows = props.facts.map(fact => (
+    <FactRow key={fact.id} fact={fact} />
+  ));
   return (
-    <table className="bordered-table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Title</th>
-          <th>Subject</th>
-        </tr>
-      </thead>
-      <tbody>{issueRows}</tbody>
-    </table>
+      <div>{factRows}</div>
   );
 }
 
-
-const issues = [
+const facts = [
   {
     id: 0,
     title: "TestFact",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at aliquam sed, pulvinar nec lectus. Nunc nec neque dui. Praesent rutrum tortor ex, a ullamcorper ipsum bibendum quis. Morbi ullamcorper vulputate lorem non consectetur. Aliquam non.",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
     creationDate: "",
     subject: "Meme",
@@ -43,7 +35,8 @@ const issues = [
   {
     id: 1,
     title: "Another One",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at aliquam sed, pulvinar nec lectus. Nunc nec neque dui. Praesent rutrum tortor ex, a ullamcorper ipsum bibendum quis. Morbi ullamcorper vulputate lorem non consectetur. Aliquam non.",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
     creationDate: "",
     subject: "Sport",
@@ -54,7 +47,8 @@ const issues = [
   {
     id: 3,
     title: "All you can hear is these YEOS",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at aliquam sed, pulvinar nec lectus. Nunc nec neque dui. Praesent rutrum tortor ex, a ullamcorper ipsum bibendum quis. Morbi ullamcorper vulputate lorem non consectetur. Aliquam non.",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
     creationDate: "",
     subject: "Politics",
@@ -64,12 +58,10 @@ const issues = [
   }
 ];
 
-class IssueList extends React.Component {
+class FactList extends React.Component {
   constructor() {
     super();
-    this.state = { issues: [] };
-
-    this.createIssue = this.createIssue.bind(this);
+    this.state = { facts: [] };
   }
 
   componentDidMount() {
@@ -78,23 +70,16 @@ class IssueList extends React.Component {
 
   loadData() {
     setTimeout(() => {
-      this.setState({ issues: issues });
+      this.setState({ facts: facts });
     }, 500);
-  }
-
-  createIssue(newIssue) {
-    const newIssues = this.state.issues.slice();
-    newIssue.id = this.state.issues.length + 1;
-    newIssues.push(newIssue);
-    this.setState({ issues: newIssues });
   }
 
   render() {
     return (
       <div>
-        <h1>Issue Tracker</h1>
-        <IssueTable issues={this.state.issues} />
+        <FactTable facts={this.state.facts} />
       </div>
     );
   }
-}export default IssueList;
+}
+export default FactList;

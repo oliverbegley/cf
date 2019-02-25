@@ -13,9 +13,9 @@ import {
   InputGroup
 } from "reactstrap";
 
-
 import SearchResults from "../App/SearchResults/SearchResults";
 import FactList from "./FactList";
+import TopicDashboard from "./TopicDashboard"
 
 class Home extends React.Component {
   constructor(props) {
@@ -45,16 +45,15 @@ class Home extends React.Component {
           facts: data,
           query: ""
         });
-        
       })
       .catch(err => {
         // Do something for an error here
       });
-      console.log(this.state);
+    console.log(this.state);
   }
 
   render() {
-    const { query,facts, isLoading } = this.state;
+    const { query, facts, isLoading } = this.state;
 
     if (isLoading) {
       return (
@@ -87,7 +86,16 @@ class Home extends React.Component {
             </InputGroup>
           </FormGroup>
         </Form>
-        <FactList/>
+        <Row>
+          <Col xs="8">
+            <h2>Browse by Topic</h2>
+            <TopicDashboard />
+          </Col>
+          <Col xs="4">
+            <h2>Recent Posts</h2>
+            <FactList />
+          </Col>
+        </Row>
       </Container>
     );
   }
