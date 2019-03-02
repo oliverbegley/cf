@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Jumbotron, Container, Row, Col, Button, Badge } from "reactstrap";
+import { Jumbotron, Container, Row, Col, Button, Badge, Card} from "reactstrap";
 
 const fact = {
   id: 3,
@@ -19,18 +19,71 @@ const fact = {
     "Hardwell"
   ],
   downvoters: ["Adonis", "Arge", "Axl"],
-  evidence: [{url:"www.google.com", title: "This is a comment", user: "memeBoi",comment:"This is a main point that someone wants to sat", supporting:false},
-  {url:"www.bbc.com",title:"A bbc report said this!",user:"",comment:"Graham Odell", supporting:true},
-  {url:"www.wikipedia.org",title:"Wow look at wikipedia",user:"cardiB",comment:"This is some fjipsbvo npfisgio ebdufoibv", supporting:false},
-  {url:"www.facebook.com",title:"Facebook is a waste of time",user:"NigelF",comment:"This is a link for facebook. It's the most amazing platform", supporting:true}]
+  evidence: [{id:"4",url:"https://www.google.com/search?q=open+link+in+new+tab&oq=open+link+in+new+tab&aqs=chrome..69i57j0l5.3561j0j4&sourceid=chrome&ie=UTF-8", title: "This is a piece of evidence", user: "memeBoi",comment:"This is a main point that someone wants to sat", supporting:false},
+  {id:"0",url:"http://www.bbc.com/sport",title:"A bbc report said this!",user:"Fuckface",comment:"Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l v", supporting:true},
+  {id:"1",url:"https://en.wikipedia.org/wiki/Randomness",title:"Wow look at wikipedia",user:"cardiB",comment:"This is some fjipsbvo npfisgio ebdufoibv", supporting:false},
+  {id:"2",url:"http://www.facebook.com/oliverbegley",title:"Facebook is a waste of time",user:"NigelF",comment:"This is a link for facebook. It's the most amazing platform", supporting:true}]
 };
-//evidence template {url:"",title:"",user:"",comment:"", supporting:false}
+
+var getLocation = function(href) {
+    var l = document.createElement("a");
+    l.href = href;
+    return l;
+};
+
+const EvidenceRow = props => (
+  <Row style={{marginBottom: "10px"}}>
+    <Card style={{width: "100%",height:"100%", padding:"5px", backgroundColor:"DB2929", color:"black"}}>
+    <Row>
+      <Col sm='2'>
+      {props.evidence.user}
+      </Col>
+      <Col>
+      <h4>
+      {props.evidence.title}
+      </h4>
+      </Col>
+      <Col>
+      <a href={props.evidence.url} target="_blank">
+      {
+        getLocation(props.evidence.url).hostname.replace(/^www\./,'')
+
+      }
+      </a>
+      </Col>
+
+      <Col sm="2">
+      {props.evidence.supporting ?
+        <Badge color="success" pill>supporting</Badge>
+        :
+        <Badge color="danger" pill>opposing</Badge>
+      }
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+      {props.evidence.comment}
+      </Col>
+    </Row>
+
+    </Card>
+  </Row>
+);
+
+function EvidenceTable(props) {
+  const evidenceRows = props.allEvidence.map(evidence => (
+    <EvidenceRow key={evidence.id} evidence={evidence} />
+  ));
+  return (
+      <div>{evidenceRows}</div>
+  );
+}
 
 class Fact extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { fact: fact, evidence: fact.evidence };
+    this.state = { fact: fact, allEvidence: fact.evidence };
   }
 
   componentDidMount() {
@@ -40,7 +93,7 @@ class Fact extends Component {
   loadData() {
     setTimeout(() => {
       this.setState({ fact: fact,
-      evidence: fact.evidence});
+      allEvidence: fact.evidence});
     }, 500);
   }
 
@@ -51,15 +104,21 @@ class Fact extends Component {
         <Jumbotron style={{ margin: "20px" }}>
           <Container>
             <Row>
-              <h3>
+              <h2>
                 {this.state.fact.title}
                 <Badge color="warning" style={{ margin: "0px 10px 0px 10px" }}>
                   {this.state.fact.subject}
                 </Badge>
-              </h3>
-            </Row>
-            <Row style={{ color: "grey" }}>
+              </h2>
+              <div style={{float:'right'}}>
+              <i>
               Posted on :{this.state.fact.creationDate}
+              </i>
+              </div>
+            </Row>
+            <hr />
+            <Row style={{ color: "grey" }}>
+
             </Row>
             <Row>
               <Col xs="2">
@@ -79,6 +138,9 @@ class Fact extends Component {
                 </Button>
               </Col>
             </Row>
+            <hr />
+            <h4>Evidence</h4>
+            <EvidenceTable allEvidence={this.state.allEvidence} />
           </Container>
         </Jumbotron>
       </div>
