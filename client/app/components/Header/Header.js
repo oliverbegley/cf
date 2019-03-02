@@ -45,7 +45,7 @@ export default class Header extends React.Component {
     return (
       <div>
         <Navbar color="light" light expand="md" style={{height: "10%"}}>
-          <NavbarBrand href="/">ComFact</NavbarBrand>
+          <NavbarBrand href="/"><h1 style={{color:"grey"}}><u>ComFact</u></h1></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

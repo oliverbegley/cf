@@ -27,7 +27,7 @@ const facts = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
     creationDate: "",
-    subject: "Meme",
+    subject: "science",
     upvoters: ["Peter", "Graham", "Joel"],
     downvoters: ["Saul", "Alex", "PublicEnemE"],
     evidence: ["evidence1", "evidence2", "evidence2"]
@@ -39,7 +39,7 @@ const facts = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
     creationDate: "",
-    subject: "Sport",
+    subject: "sport",
     upvoters: ["Iain", "Craig", "Bob"],
     downvoters: ["Lain", "Garry", "Shaun"],
     evidence: ["e1", "e2", "e3"]
@@ -51,7 +51,7 @@ const facts = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
     creationDate: "",
-    subject: "Politics",
+    subject: "politics",
     upvoters: ["Alan", "Alice", "Arvile"],
     downvoters: ["Adonis", "Arge", "Axl"],
     evidence: ["d1", "d2", "dnsands"]

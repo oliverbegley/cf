@@ -7,10 +7,7 @@ import {
   Card,
   CardImg,
   CardImgOverlay,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Button
+  CardTitle
 } from "reactstrap";
 
 import businessImage from "../../../public/assets/img/business.jpeg";
@@ -25,60 +22,68 @@ class TopicDashboard extends React.Component {
     return (
       <Container>
         <Row>
-        <Col>
-        <Card inverse>
-        <CardImg width="100%" src={businessImage} alt="Card image cap" />
-        <CardImgOverlay>
-        <CardTitle>Business</CardTitle>
-        </CardImgOverlay>
-        </Card>
-        </Col>
-        <Col>
-        <Card inverse>
-        <CardImg width="100%" src={environmentImage} alt="Card image cap" />
-        <CardImgOverlay>
-        <CardTitle>Environment</CardTitle>
-        </CardImgOverlay>
-        </Card>
-        </Col>
+          <Col>
+            <Card inverse>
+              <CardImg width="100%" src={businessImage} alt="Card image cap" />
+              <CardImgOverlay>
+                <CardTitle>Business</CardTitle>
+              </CardImgOverlay>
+            </Card>
+          </Col>
+          <Col>
+            <Card inverse>
+              <CardImg
+                width="100%"
+                src={environmentImage}
+                alt="Card image cap"
+              />
+              <CardImgOverlay>
+                <CardTitle>Environment</CardTitle>
+              </CardImgOverlay>
+            </Card>
+          </Col>
         </Row>
         <br />
         <Row>
-        <Col>
-        <Card inverse>
-        <CardImg width="100%" src={politicsImage} alt="Card image cap" />
-        <CardImgOverlay>
-        <CardTitle>Politics</CardTitle>
-        </CardImgOverlay>
-        </Card>
-        </Col>
-        <Col>
-        <Card inverse>
-        <CardImg width="100%" src={scienceImage} alt="Card image cap" />
-        <CardImgOverlay>
-        <CardTitle>Science</CardTitle>
-        </CardImgOverlay>
-        </Card>
-        </Col>
+          <Col>
+            <Card inverse>
+              <CardImg width="100%" src={politicsImage} alt="Card image cap" />
+              <CardImgOverlay>
+                <CardTitle>Politics</CardTitle>
+              </CardImgOverlay>
+            </Card>
+          </Col>
+          <Col>
+            <Card inverse>
+              <CardImg width="100%" src={scienceImage} alt="Card image cap" />
+              <CardImgOverlay>
+                <CardTitle>Science</CardTitle>
+              </CardImgOverlay>
+            </Card>
+          </Col>
         </Row>
         <br />
         <Row>
-        <Col>
-        <Card inverse>
-        <CardImg width="100%" src={sportImage} alt="Card image cap" />
-        <CardImgOverlay>
-        <CardTitle>Sport</CardTitle>
-        </CardImgOverlay>
-        </Card>
-        </Col>
-        <Col>
-        <Card inverse>
-        <CardImg width="100%" src={technologyImage} alt="Card image cap" />
-        <CardImgOverlay>
-        <CardTitle >Technology</CardTitle>
-        </CardImgOverlay>
-        </Card>
-        </Col>
+          <Col>
+            <Card inverse>
+              <CardImg width="100%" src={sportImage} alt="Card image cap" />
+              <CardImgOverlay>
+                <CardTitle>Sport</CardTitle>
+              </CardImgOverlay>
+            </Card>
+          </Col>
+          <Col>
+            <Card inverse>
+              <CardImg
+                width="100%"
+                src={technologyImage}
+                alt="Card image cap"
+              />
+              <CardImgOverlay>
+                <CardTitle>Technology</CardTitle>
+              </CardImgOverlay>
+            </Card>
+          </Col>
         </Row>
       </Container>
     );
