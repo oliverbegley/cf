@@ -16,5 +16,11 @@ const EvidenceSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  supporting: {
+    type: Boolean,
+    default: true
+  }
 });
 module.exports = mongoose.model('Evidence', EvidenceSchema);
+
+//evidence template {url:"",title:"",user:"",comment:"", supporting:false}

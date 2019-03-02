@@ -7,7 +7,7 @@ const fact = {
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
   userId: "",
-  creationDate: "",
+  creationDate: "02/03/2019",
   subject: "politics",
   upvoters: [
     "Alan",
@@ -19,14 +19,18 @@ const fact = {
     "Hardwell"
   ],
   downvoters: ["Adonis", "Arge", "Axl"],
-  evidence: ["d1", "d2", "dnsands"]
+  evidence: [{url:"www.google.com", title: "This is a comment", user: "memeBoi",comment:"This is a main point that someone wants to sat", supporting:false},
+  {url:"www.bbc.com",title:"A bbc report said this!",user:"",comment:"Graham Odell", supporting:true},
+  {url:"www.wikipedia.org",title:"Wow look at wikipedia",user:"cardiB",comment:"This is some fjipsbvo npfisgio ebdufoibv", supporting:false},
+  {url:"www.facebook.com",title:"Facebook is a waste of time",user:"NigelF",comment:"This is a link for facebook. It's the most amazing platform", supporting:true}]
 };
+//evidence template {url:"",title:"",user:"",comment:"", supporting:false}
 
 class Fact extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { fact: fact };
+    this.state = { fact: fact, evidence: fact.evidence };
   }
 
   componentDidMount() {
@@ -35,11 +39,13 @@ class Fact extends Component {
 
   loadData() {
     setTimeout(() => {
-      this.setState({ fact: fact });
+      this.setState({ fact: fact,
+      evidence: fact.evidence});
     }, 500);
   }
 
   render() {
+    console.log(this.state)
     return (
       <div>
         <Jumbotron style={{ margin: "20px" }}>
@@ -52,17 +58,19 @@ class Fact extends Component {
                 </Badge>
               </h3>
             </Row>
+            <Row style={{ color: "grey" }}>
+              Posted on :{this.state.fact.creationDate}
+            </Row>
             <Row>
               <Col xs="2">
                 <b>Description: </b>
               </Col>
               <Col xs="7">{this.state.fact.description}</Col>
-              <Col xs="1" />
-              <Col xs="2">
+              <Col xs="3">
                 <Button outline color="success">
                   +
                 </Button>
-                <span style={{ margin: "0px 10px 0px 10px"}}>
+                <span style={{ margin: "0px 10px 0px 10px" }}>
                   {this.state.fact.upvoters.length -
                     this.state.fact.downvoters.length}
                 </span>
