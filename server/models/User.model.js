@@ -38,3 +38,10 @@ UserSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 module.exports = mongoose.model('User', UserSchema);
+
+firstName:
+  type:'Michael'
+surname: 'Stephens'
+country: 'GB'
+email: 'bigtest@tester.com'
+signUpDate: '10/2/2018'
