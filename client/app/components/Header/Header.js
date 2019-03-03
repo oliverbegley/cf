@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from 'react-redux';
 import {
   Collapse,
   Navbar,
@@ -8,16 +7,9 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Form,
-  FormGroup,
-  Input,
-  Button,
-  InputGroupAddon
 } from "reactstrap";
+
+import logo from '../../../public/assets/img/comfactLogo.jpg';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -45,8 +37,9 @@ export default class Header extends React.Component {
     return (
       <div>
         <Navbar color="light" light expand="md" style={{height: "10%"}}>
-          <NavbarBrand href="/"><h1 style={{color:"grey"}}><u>ComFact</u></h1></NavbarBrand>
+          <NavbarBrand href="/"><img src={logo} style={{height:"60px",borderRadius:"15px", border:'2px solid #888889'}}></img></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
+
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

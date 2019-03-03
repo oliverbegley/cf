@@ -8,10 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App = ({ children }) => (
   <>
     <Header />
-    <main>
+    <main styles={{paddingBottom:'60px'}}>
       {children}
     </main>
-    <Footer />
+    <Footer/>
   </>
 );
 

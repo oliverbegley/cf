@@ -20,6 +20,7 @@ import LogIn from './components/LogIn/LogIn';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchResults from './components/App/SearchResults/SearchResults';
 import Fact from './components/Fact/Fact'
+import ProfileDashboard from './components/ProfileDashboard/ProfileDashboard';
 
 
 
@@ -30,6 +31,7 @@ render((
         <Route exact path="/" component={Home}/>
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={LogIn} />
+        <Route path="/profile/:userid" component={ProfileDashboard}/>
         <Route path="/searchresults/:searchstring" component={SearchResults}/>
         <Route path="/fact/:factid" component={Fact} />
         <Route component={NotFound}/>

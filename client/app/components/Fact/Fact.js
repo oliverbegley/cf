@@ -3,7 +3,7 @@ import { Jumbotron, Container, Row, Col, Button, Badge, Card} from "reactstrap";
 
 const fact = {
   id: 3,
-  title: "All you can hear is these YEOS",
+  title: "Did Donald Trump influence the 2016 U.S. Election",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
   userId: "",
@@ -44,11 +44,10 @@ const EvidenceRow = props => (
       </h4>
       </Col>
       <Col>
-      <a href={props.evidence.url} target="_blank">
+      Source: <a href={props.evidence.url} target="_blank">
       {
         getLocation(props.evidence.url).hostname.replace(/^www\./,'')
-
-      }
+      } <img src="https://img.icons8.com/office/16/000000/ok.png" />
       </a>
       </Col>
 
@@ -110,11 +109,11 @@ class Fact extends Component {
                   {this.state.fact.subject}
                 </Badge>
               </h2>
-              <div style={{float:'right'}}>
-              <i>
+            </Row>
+            <Row>
+            <i>
               Posted on :{this.state.fact.creationDate}
               </i>
-              </div>
             </Row>
             <hr />
             <Row style={{ color: "grey" }}>

@@ -15,6 +15,7 @@ import {
   Col
 } from "reactstrap";
 import loading from '../../../public/assets/gif/loading.gif';
+import ProfileDashboard from "../ProfileDashboard/ProfileDashboard"
 
 class LogIn extends Component {
   constructor(props) {
@@ -207,6 +208,7 @@ class LogIn extends Component {
     return (
       <div>
         <p>Account</p>
+        <ProfileDashboard />
         <button onClick={this.logout}>Logout</button>
       </div>
     );
