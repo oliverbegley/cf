@@ -81,7 +81,6 @@ function EvidenceTable(props) {
 class Fact extends Component {
   constructor(props) {
     super(props);
-
     this.state = { fact: fact, allEvidence: fact.evidence };
   }
 

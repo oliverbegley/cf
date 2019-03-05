@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  Jumbotron,
+  Alert,
   Button,
   Form,
   FormGroup,
@@ -15,7 +15,7 @@ import {
 
 import SearchResults from "../App/SearchResults/SearchResults";
 import FactList from "./FactList";
-import TopicDashboard from "./TopicDashboard"
+import TopicDashboard from "./TopicDashboard";
 
 class Home extends React.Component {
   constructor(props) {
@@ -25,7 +25,8 @@ class Home extends React.Component {
     this.state = {
       query: "",
       isLoading: false,
-      facts: []
+      facts: [],
+      showHelp: false
     };
   }
 
@@ -52,6 +53,9 @@ class Home extends React.Component {
     console.log(this.state);
   }
 
+  operation() {
+    this.setState({ showHelp: !this.state.showHelp });
+  }
   render() {
     const { query, facts, isLoading } = this.state;
 
@@ -67,25 +71,62 @@ class Home extends React.Component {
       <Container style={{ marginTop: "10px" }}>
         <Form>
           <FormGroup row>
-            <InputGroup style={{ margin: "10px", borderRadius: "20px" }}>
-              <Input
-                type="search"
-                name="search"
-                id="search"
-                placeholder="search here..."
-                value={this.state.query}
-                onChange={event => {
-                  this.setState({ query: event.target.value });
-                }}
+            <Col sm="2" />
+            <Col>
+              <div>
+                <InputGroup
+                  style={{
+                    margin: "10px",
+                    border:'4px solid grey',
+                    borderRadius:'30px 10px',
+                    height: "100%",
+                    overflow:'hidden'
+                  }}
+                >
+                  <Input
+                    style={{ fontSize: "35px" }}
+                    type="search"
+                    name="search"
+                    id="search"
+                    placeholder="search a fact here..."
+                    value={this.state.query}
+                    onChange={event => {
+                      this.setState({ query: event.target.value });
+                    }}
+                  />
+                  <InputGroupAddon addonType="prepend">
+                    <Button
+                      color="primary"
+                      onClick={this.onSearch}
+                      style={{ height: "100%"
+                    }}
+                    >
+                      Search
+                    </Button>
+                  </InputGroupAddon>
+                </InputGroup>
+              </div>
+            </Col>
+            <Col sm="2">
+              <img
+                src="https://img.icons8.com/flat_round/50/000000/question-mark.png"
+                title="this will be displayed as a tooltip"
+                style={{ marginTop: "30px", height: "30px" }}
+                onClick={() => this.operation()}
               />
-              <InputGroupAddon addonType="prepend">
-                <Button color="primary" onClick={this.onSearch}>
-                  Search
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
+            </Col>
           </FormGroup>
         </Form>
+        {this.state.showHelp ? (
+            <Alert color="info">
+              <p>
+                Get started by signing up, logging in or search facts that have
+                been verified. Search for a word or phrase you would like to
+                find out more about
+              </p>
+            </Alert>
+        ) : null}
+        <hr />
         <Row>
           <Col xs="8">
             <h2>Browse by Topic</h2>
