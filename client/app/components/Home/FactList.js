@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Jumbotron } from "reactstrap";
+import { Jumbotron, Badge } from "reactstrap";
 
 const FactRow = props => (
   <Jumbotron>
-    <h4>{props.fact.title}</h4>
-    <p>{props.fact.subject}</p>
+    <h4>{props.fact.title} <Badge color="warning">{props.fact.subject}</Badge></h4>
     <p>{props.fact.description}</p>
   </Jumbotron>
 );

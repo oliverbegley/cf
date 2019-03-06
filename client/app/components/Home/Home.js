@@ -128,11 +128,11 @@ class Home extends React.Component {
         ) : null}
         <hr />
         <Row>
-          <Col xs="8">
+          <Col xs="12" md='8'>
             <h2>Browse by Topic</h2>
             <TopicDashboard />
           </Col>
-          <Col xs="4">
+          <Col xs="12" md='4'>
             <h2>Recent Posts</h2>
             <FactList />
           </Col>
