@@ -56,6 +56,11 @@ export default class Header extends React.Component {
                   GitHub
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink href="/fact/addfact">
+                  AddFact
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

@@ -29,10 +29,10 @@ const facts = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
-    creationDate: "",
+    creationDate: "12/03/04",
     subject: "science",
     upvoters: ["Peter", "Graham", "Joel"],
-    downvoters: ["Saul", "Alex", "PublicEnemE"],
+    downvoters: ["Saul", "Alex", "PublicEnemE","Saul", "Alex", "PublicEnemE"],
     evidence: ["evidence1", "evidence2", "evidence2"]
   },
   {
@@ -41,9 +41,9 @@ const facts = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
-    creationDate: "",
+    creationDate: "09/12/18",
     subject: "sport",
-    upvoters: ["Iain", "Craig", "Bob"],
+    upvoters: ["Iain", "Craig", "Bob", "Saul", "Alex", "PublicEnemE", "Saul", "Alex", "PublicEnemE"],
     downvoters: ["Lain", "Garry", "Shaun"],
     evidence: ["e1", "e2", "e3"]
   },
@@ -53,9 +53,9 @@ const facts = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
     userId: "",
-    creationDate: "",
+    creationDate: "29/02/2019",
     subject: "politics",
-    upvoters: ["Alan", "Alice", "Arvile"],
+    upvoters: ["Alan", "Alice", "Arvile","Alan", "Alice", "Arvile","Alan", "Alice", "Arvile","Alan", "Alice", "Arvile" ],
     downvoters: ["Adonis", "Arge", "Axl"],
     evidence: ["d1", "d2", "dnsands"]
   }
@@ -75,6 +75,7 @@ const FactRow = props => (
       </h3>
     </CardTitle>
     <CardText>{props.fact.description}</CardText>
+    
     <Button
       color="primary"
       style={{ maxWidth: "50%", justifyContent: "center" }}
@@ -89,6 +90,22 @@ function FactTable(props) {
     <FactRow key={fact.id} fact={fact} />
   ));
   return <div>{factRows}</div>;
+}
+
+function OverallScore(array1,array2) {
+  var score = array1.length - array2.length;
+  console.log(score);
+  badgeColor = "";
+  if(score > 0){
+    badgeColor ="success";
+  }
+  if(score < 0){
+    badgeColor = "danger";
+  }
+  if(score === 0){
+    badgeColor = "secondary";
+  }
+  return <Badge color={badgeColor}>Success</Badge>;
 }
 
 function EvidenceTable(props) {

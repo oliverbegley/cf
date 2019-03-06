@@ -19,8 +19,19 @@ const EvidenceSchema = new mongoose.Schema({
   supporting: {
     type: Boolean,
     default: true
+  },
+  datePosted: {
+    type: Date,
+    default: Date.now()
   }
 });
 module.exports = mongoose.model('Evidence', EvidenceSchema);
 
 //evidence template {url:"",title:"",user:"",comment:"", supporting:false}
+
+// url:,
+// title:,
+// user:,
+// comment:,
+// supporting:,
+// datePosted:

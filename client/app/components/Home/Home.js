@@ -77,8 +77,8 @@ class Home extends React.Component {
                 <InputGroup
                   style={{
                     margin: "10px",
-                    border:'4px solid grey',
-                    borderRadius:'30px 10px',
+                    border:'7px solid grey',
+                    borderRadius:'30px',
                     height: "100%",
                     overflow:'hidden'
                   }}
@@ -110,8 +110,8 @@ class Home extends React.Component {
             <Col sm="2">
               <img
                 src="https://img.icons8.com/flat_round/50/000000/question-mark.png"
-                title="this will be displayed as a tooltip"
-                style={{ marginTop: "30px", height: "30px" }}
+                title="Help"
+                style={{ marginTop: "30px", height: "30px",cursor: 'pointer'}}
                 onClick={() => this.operation()}
               />
             </Col>

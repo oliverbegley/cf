@@ -21,6 +21,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchResults from './components/App/SearchResults/SearchResults';
 import Fact from './components/Fact/Fact'
 import ProfileDashboard from './components/ProfileDashboard/ProfileDashboard';
+import AddFact from './components/AddFact/AddFact';
 
 
 
@@ -33,6 +34,7 @@ render((
         <Route path="/login" component={LogIn} />
         <Route path="/profile/:userid" component={ProfileDashboard}/>
         <Route path="/searchresults/:searchstring" component={SearchResults}/>
+        <Route path="/fact/addFact" component={AddFact} />
         <Route path="/fact/:factid" component={Fact} />
         <Route component={NotFound}/>
       </Switch>

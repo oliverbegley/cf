@@ -46,4 +46,13 @@ module.exports = app => {
       facts
     }); // end of sign up endpoint
   });
+
+  //Get Fact by ID
+  // app.get("/api/fact/:id", req,res,next) => {
+  //   Fact.find({
+  //     email: email
+  //   }
+
+
+  // }
 };

@@ -16,6 +16,10 @@ const FactSchema = new mongoose.Schema({
     type: String,
     default:''
   },
+  description:{
+    type: String,
+    default: ''
+  },
   upvoters: {
     type: Array,
     default: ''
