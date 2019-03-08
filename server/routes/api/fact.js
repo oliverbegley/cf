@@ -46,9 +46,25 @@ module.exports = app => {
 
   app.get("/api/fact/:id", (req, res, next) => {
     var id = req.params.id;
-    Fact.find({_id: ObjectID(id)})
+    Fact.findOne({_id: ObjectID(id)})
     .exec()
     .then((fact) => res.json(fact))
     .catch((err) => next(err));
+  });
+
+  app.post("/api/fact/facts",(req,res,next) => {
+    var fact = new Fact();
+    fact.title = req.body.title;
+    fact.userId = req.body.userId;
+    fact.creationDate = Date.now();
+    fact.subject = req.body.subject;
+    fact.description = req.body.description;
+
+    fact.save(function (err){
+      if(err){
+        res.json(err);
+      }
+      res.json({message:'Success fact added',data: fact});
+    });
   });
 };

@@ -17,7 +17,10 @@ export default class AddFact extends React.Component {
     super(props);
     this.state = {
       showAddFactHelp: false,
-      showAddFactGuidelines: false
+      showAddFactGuidelines: false,
+      title: "",
+      subject: "",
+      descripion: ""
     };
   }
 
@@ -27,6 +30,24 @@ export default class AddFact extends React.Component {
 
   toggleShowAddFactGuidelines() {
     this.setState({ showAddFactGuidelines: !this.state.showAddFactGuidelines });
+  }
+
+  onTextboxChangeTitle(event) {
+    this.setState({
+      title: event.target.value
+    });
+  }
+
+  onSelectChangeSubject(event) {
+    this.setState({
+      subject: event.target.value
+    });
+  }
+
+  onTextboxChangeDescription(event) {
+    this.setState({
+      description: event.target.value
+    });
   }
 
   render() {
