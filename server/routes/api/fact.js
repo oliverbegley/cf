@@ -1,4 +1,5 @@
 const Fact = require("../../models/Fact.model");
+let ObjectID = require("mongodb").ObjectID;
 
 module.exports = app => {
   /*
@@ -34,6 +35,8 @@ module.exports = app => {
     }
   ];
 
+  const testing = 'please fucking work';
+
   //Get all facts
   app.get("/api/fact/facts", (req, res, next) => {
     return res.send({
@@ -41,18 +44,11 @@ module.exports = app => {
     });
   });
 
-  app.post("/api/fact/add", (req, res, next) => {
-    return res.send({
-      facts
-    }); // end of sign up endpoint
+  app.get("/api/fact/:id", (req, res, next) => {
+    var id = req.params.id;
+    Fact.find({_id: ObjectID(id)})
+    .exec()
+    .then((fact) => res.json(fact))
+    .catch((err) => next(err));
   });
-
-  //Get Fact by ID
-  // app.get("/api/fact/:id", req,res,next) => {
-  //   Fact.find({
-  //     email: email
-  //   }
-
-
-  // }
 };

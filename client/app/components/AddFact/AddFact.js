@@ -71,7 +71,7 @@ export default class AddFact extends React.Component {
                 <Input type="select" name="subject" id="subject">
                   <option>business</option>
                   <option>enviornment</option>
-                  <option>tolitics</option>
+                  <option>politics</option>
                   <option>science</option>
                   <option>sport</option>
                   <option>technology</option>
@@ -91,24 +91,43 @@ export default class AddFact extends React.Component {
             {!this.state.showAddFactGuidelines ? (
               <Row>
                 <Col>
-                  <Button onClick={() => this.toggleShowAddFactGuidelines()}>
+                  <Button
+                    onClick={() => this.toggleShowAddFactGuidelines()}
+                    color="info"
+                  >
                     Show Guidelines
                   </Button>
                 </Col>
               </Row>
             ) : null}
-
             {this.state.showAddFactGuidelines ? (
               <Row>
                 <Col>
                   <Alert color="info">
                     <Row>
-                      <Col xl='11'>
+                      <Col xl="11">
                         <h2>Community Guidelines</h2>
+                        <ol type="i">
+                          <li>Title should be concise and descriptive</li>
+                          <li>
+                            Research existing posts before posting to see if
+                            there is any existing content that may provide you
+                            with some answers
+                          </li>
+                          <li>
+                            Use impartial language to remove potential biases
+                          </li>
+                          <li>
+                            Refer to the terms and conditions for more information 
+                          </li>
+                        </ol>
                       </Col>
-                      <Col xl='1'>
-                        <Button onClick={() => this.toggleShowAddFactGuidelines()} color="info">
-                            hide
+                      <Col xl="1">
+                        <Button
+                          onClick={() => this.toggleShowAddFactGuidelines()}
+                          color="info"
+                        >
+                          hide
                         </Button>
                       </Col>
                     </Row>
@@ -116,6 +135,12 @@ export default class AddFact extends React.Component {
                 </Col>
               </Row>
             ) : null}
+            <br />
+            <Row>
+              <Col>
+                <Button color="primary">Add Fact</Button>
+              </Col>
+            </Row>
           </Form>
         </Container>
       </Jumbotron>

@@ -244,7 +244,7 @@ class Home extends Component {
           <Jumbotron style={{ margin: "20px 10% 20px 10%" }}>
             <Container>
               <Row>
-                <h2>Sign Up</h2>
+                <h1>Sign Up</h1>
               </Row>
               <Row>
                 <Col>

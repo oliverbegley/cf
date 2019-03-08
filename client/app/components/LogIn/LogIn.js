@@ -174,7 +174,7 @@ class LogIn extends Component {
             <div style={{ textAlign: "center" }}>
               <Jumbotron style={{display: "inline-block", minWidth: "50%", textAlign:"left"}}>
                 <div>
-                  <h2>Sign In</h2>
+                  <h1>Sign In</h1>
                   <FormGroup>
                     <Label for="email">Email</Label>
                     <Input

@@ -17,6 +17,8 @@ import SearchResults from "../App/SearchResults/SearchResults";
 import FactList from "./FactList";
 import TopicDashboard from "./TopicDashboard";
 
+import close from "../../../public/assets/img/close.png";
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -56,6 +58,7 @@ class Home extends React.Component {
   operation() {
     this.setState({ showHelp: !this.state.showHelp });
   }
+  
   render() {
     const { query, facts, isLoading } = this.state;
 
@@ -77,10 +80,10 @@ class Home extends React.Component {
                 <InputGroup
                   style={{
                     margin: "10px",
-                    border:'7px solid grey',
-                    borderRadius:'30px',
+                    border: "7px solid grey",
+                    borderRadius: "30px",
                     height: "100%",
-                    overflow:'hidden'
+                    overflow: "hidden"
                   }}
                 >
                   <Input
@@ -98,8 +101,7 @@ class Home extends React.Component {
                     <Button
                       color="primary"
                       onClick={this.onSearch}
-                      style={{ height: "100%"
-                    }}
+                      style={{ height: "100%" }}
                     >
                       Search
                     </Button>
@@ -111,28 +113,35 @@ class Home extends React.Component {
               <img
                 src="https://img.icons8.com/flat_round/50/000000/question-mark.png"
                 title="Help"
-                style={{ marginTop: "30px", height: "30px",cursor: 'pointer'}}
+                style={{ marginTop: "30px", height: "30px", cursor: "pointer" }}
                 onClick={() => this.operation()}
               />
             </Col>
           </FormGroup>
         </Form>
         {this.state.showHelp ? (
-            <Alert color="info">
+          <Alert color="info">
+            <Row>
+              <Col xl='11'>
               <p>
-                Get started by signing up, logging in or search facts that have
-                been verified. Search for a word or phrase you would like to
-                find out more about
-              </p>
-            </Alert>
+              Get started by signing up, logging in or search facts that have
+              been verified. Search for a word or phrase you would like to find
+              out more about
+            </p>
+              </Col>
+              <Col xl='1'>
+              <img src={close} style={{height: "30px", cursor: "pointer"}} onClick={()=>this.operation()}/>
+              </Col>
+            </Row>
+          </Alert>
         ) : null}
         <hr />
         <Row>
-          <Col xs="12" md='8'>
+          <Col xs="12" md="8">
             <h2>Browse by Topic</h2>
             <TopicDashboard />
           </Col>
-          <Col xs="12" md='4'>
+          <Col xs="12" md="4">
             <h2>Recent Posts</h2>
             <FactList />
           </Col>

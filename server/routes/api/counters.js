@@ -8,6 +8,13 @@ module.exports = (app) => {
       .catch((err) => next(err));
   });
 
+  app.get('/api/counters', (req, res, next) => {
+    Counter.find()
+      .exec()
+      .then((counter) => res.json(counter))
+      .catch((err) => next(err));
+  });
+
   app.post('/api/counters', function (req, res, next) {
     const counter = new Counter();
 
@@ -25,7 +32,7 @@ module.exports = (app) => {
 
   app.put('/api/counters/:id/increment', (req, res, next) => {
     Counter.findById(req.params.id)
-      .exec()
+      .ex()
       .then((counter) => {
         counter.count++;
 

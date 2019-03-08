@@ -13,7 +13,7 @@ class Footer extends Component{
       return(
               <Navbar color="dark" dark>
                   <Container>
-                      <h4> Oliver Begley - University of Glasgow - 2019</h4>
+                      <h4>Oliver Begley - University of Glasgow - 2019</h4>
                   </Container>
               </Navbar>
       )
