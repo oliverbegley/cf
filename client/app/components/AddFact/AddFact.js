@@ -100,7 +100,7 @@ export default class AddFact extends React.Component {
     } = this.state;
 
     return (
-      <Jumbotron style={{ margin: "20px" }}>
+      <Jumbotron style={{ margin: "70px", marginBottom:'150px' }}>
         <Container>
           <Form>
             {this.state.addFactError ? (

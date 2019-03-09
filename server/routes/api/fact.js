@@ -44,6 +44,13 @@ module.exports = app => {
     });
   });
 
+  app.get("/api/fact/mostrecent", (req,res, next)=>{
+    Fact.find().sort([['currentDate', -1]]).limit(10)
+    .exec()
+    .then((fact)=> res.json(fact))
+    .catch((err)=>next(err));
+  });
+
   app.get("/api/fact/:id", (req, res, next) => {
     var id = req.params.id;
     Fact.findOne({_id: ObjectID(id)})
