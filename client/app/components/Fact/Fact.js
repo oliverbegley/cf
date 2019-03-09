@@ -96,7 +96,6 @@ class Fact extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div>
         <Jumbotron style={{ margin: "20px" }}>

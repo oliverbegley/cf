@@ -151,7 +151,7 @@ class Home extends Component {
       isLoading: true
     });
     // Post request to backend
-    fetch("/api/account/signin", {
+    fetch("/api/facts/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

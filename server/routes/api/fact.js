@@ -60,10 +60,30 @@ module.exports = app => {
     fact.subject = req.body.subject;
     fact.description = req.body.description;
 
+    if(!fact.title){
+      return res.send({
+        success: false,
+        message: 'Error: Title cannot be blank.'
+      })
+    }
+    if(!fact.subject){
+      return res.send({
+        success: false,
+        message: 'Error: Subject cannot be blank.'
+      })
+    }
+    if(!fact.description){
+      return res.send({
+        success: false,
+        message: 'Error: description must be at least 200 characters.'
+      })
+    }
+
     fact.save(function (err){
       if(err){
         res.json(err);
       }
+      
       res.json({message:'Success fact added',data: fact});
     });
   });
