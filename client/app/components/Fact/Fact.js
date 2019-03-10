@@ -1,30 +1,6 @@
 import React, { Component } from "react";
 import { Jumbotron, Container, Row, Col, Button, Badge, Card} from "reactstrap";
 
-const fact = {
-  id: 3,
-  title: "Did Donald Trump influence the 2016 U.S. Election",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
-  userId: "",
-  creationDate: "02/03/2019",
-  subject: "politics",
-  upvoters: [
-    "Alan",
-    "Alice",
-    "Arvile",
-    "Shithead",
-    "Nigel",
-    "Andy",
-    "Hardwell"
-  ],
-  downvoters: ["Adonis", "Arge", "Axl"],
-  evidence: [{id:"4",url:"https://www.google.com/search?q=open+link+in+new+tab&oq=open+link+in+new+tab&aqs=chrome..69i57j0l5.3561j0j4&sourceid=chrome&ie=UTF-8", title: "This is a piece of evidence", user: "memeBoi",comment:"This is a main point that someone wants to sat", supporting:false},
-  {id:"0",url:"http://www.bbc.com/sport",title:"A bbc report said this!",user:"Fuckface",comment:"Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l Lfnviob fuo fuio fg fbjkf aufioa fnjkc xalk p urao rnajr brar bjrlkhr brl r l v", supporting:true},
-  {id:"1",url:"https://en.wikipedia.org/wiki/Randomness",title:"Wow look at wikipedia",user:"cardiB",comment:"This is some fjipsbvo npfisgio ebdufoibv", supporting:false},
-  {id:"2",url:"http://www.facebook.com/oliverbegley",title:"Facebook is a waste of time",user:"NigelF",comment:"This is a link for facebook. It's the most amazing platform", supporting:true}]
-};
-
 var getLocation = function(href) {
     var l = document.createElement("a");
     l.href = href;
@@ -69,6 +45,9 @@ const EvidenceRow = props => (
   </Row>
 );
 
+var testing;
+var testString;
+
 function EvidenceTable(props) {
   const evidenceRows = props.allEvidence.map(evidence => (
     <EvidenceRow key={evidence.id} evidence={evidence} />
@@ -85,20 +64,21 @@ class Fact extends Component {
   }
 
   componentDidMount() {
-    this.loadData();
-  }
-
-  loadData() {
-    setTimeout(() => {
-      this.setState({ fact: fact,
-      allEvidence: fact.evidence});
-    }, 500);
+    testing = this.props.match.params.factid
+    var testString = "/api/fact/" + "5c83e5755d767842806aab7a";
+    fetch(testString)
+      .then(response => response.json())
+      .then(this.setState({ fact: fact,
+        allEvidence: fact.evidence}));
+    console.log(this.state);
   }
 
   render() {
     return (
       <div>
+        {}
         <Jumbotron style={{ margin: "20px" }}>
+        {"api/fact/"+ testing}
           <Container>
             <Row>
               <h2>

@@ -38,7 +38,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    console.log("helo");
     fetch("/api/fact/facts")
       .then(response => {
         return response.json();

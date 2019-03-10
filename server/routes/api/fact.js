@@ -5,47 +5,10 @@ module.exports = app => {
   /*
    * Add a fact
    */
-  const facts = [
-    {
-      title: "TestFact",
-      userId: "",
-      creationDate: "",
-      subject:"Meme",
-      upvoters: ["Peter", "Graham", "Joel"],
-      downvoters: ["Saul", "Alex", "PublicEnemE"],
-      evidence: ["evidence1", "evidence2", "evidence2"]
-    },
-    {
-      title: "Another One",
-      userId: "",
-      creationDate: "",
-      subject:"Sport",
-      upvoters: ["Iain", "Craig", "Bob"],
-      downvoters: ["Lain", "Garry", "Shaun"],
-      evidence: ["e1", "e2", "e3"]
-    },
-    {
-      title: "All you can hear is these YEOS",
-      userId: "",
-      creationDate: "",
-      subject:"Politics",
-      upvoters: ["Alan", "Alice", "Arvile"],
-      downvoters: ["Adonis", "Arge", "Axl"],
-      evidence: ["d1", "d2", "dnsands"]
-    }
-  ];
 
-  const testing = 'please fucking work';
-
-  //Get all facts
-  app.get("/api/fact/facts", (req, res, next) => {
-    return res.send({
-      facts
-    });
-  });
-
-  app.get("/api/fact/mostrecent", (req,res, next)=>{
-    Fact.find().sort([['currentDate', -1]]).limit(10)
+  app.get("/api/fact/recent/:num", (req,res, next)=>{
+    var num = parseInt(req.params.num);
+    Fact.find().sort([['creationDate', -1]]).limit(num)
     .exec()
     .then((fact)=> res.json(fact))
     .catch((err)=>next(err));

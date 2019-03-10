@@ -64,8 +64,11 @@ class FactList extends React.Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    fetch("/api/fact/recent/3")
+      .then(response => response.json())
+      .then(facts => this.setState({ facts }));
   }
+
 
   loadData() {
     setTimeout(() => {
