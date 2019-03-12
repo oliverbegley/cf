@@ -1,4 +1,5 @@
 const Fact = require("../../models/Fact.model");
+const Evidence = require("../../models/Evidence.model")
 let ObjectID = require("mongodb").ObjectID;
 
 module.exports = app => {
@@ -57,4 +58,29 @@ module.exports = app => {
       res.json({message:'Success fact added',data: fact});
     });
   });
+
+  app.post("/api/fact/:id/evidence",(req,res,next) => {
+    var id = req.params.id;
+
+    var evidence = new Evidence();
+    evidence.url = req.body.url;
+    evidence.title = req.body.title;
+    evidence.user = req.body.user;
+    evidence.comment = req.body.title;
+    evidence.supporting = req.body.supporting;
+    evidence.date = Date.now();
+
+    var id = req.params.id;
+    Fact.findOne({_id: ObjectID(id)})
+    .exec()
+    .then(function(fact){
+      fact.evidence.push(evidence);
+      fact.save();
+    });
+    return res.send({
+      success: true,
+      message: 'evidence added',
+      evidence: evidence
+    })
+  })
 };

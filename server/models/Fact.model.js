@@ -10,7 +10,7 @@ const FactSchema = new mongoose.Schema({
   },
   creationDate: {
     type: Date,
-    default: ''
+    default: null
   },
   subject:{
     type: String,
@@ -22,15 +22,15 @@ const FactSchema = new mongoose.Schema({
   },
   upvoters: {
     type: Array,
-    default: ''
+    default: []
   },
   downvoters: {
     type: Array,
-    default: ''
+    default: []
   },
   evidence: {
     type: Array,
-    default: ''
+    default: []
   }
 });
 module.exports = mongoose.model('Fact', FactSchema);

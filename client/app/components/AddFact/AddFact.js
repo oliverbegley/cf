@@ -92,7 +92,6 @@ export default class AddFact extends React.Component {
 
   render() {
     const {
-      showAddFactHelp,
       title,
       subject,
       description,
