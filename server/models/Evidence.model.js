@@ -17,8 +17,8 @@ const EvidenceSchema = new mongoose.Schema({
     default: ''
   },
   supporting: {
-    type: Boolean,
-    default: true
+    type: String,
+    default: ''
   },
   datePosted: {
     type: Date,

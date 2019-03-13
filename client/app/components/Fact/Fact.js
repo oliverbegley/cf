@@ -10,7 +10,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Form
+  Form,
+  Alert
 } from "reactstrap";
 
 var getLocation = function(href) {
@@ -44,7 +45,7 @@ const EvidenceRow = props => (
         </Col>
 
         <Col sm="2">
-          {props.evidence.supporting ? (
+          {props.evidence.supporting === "supporting" ? (
             <Badge color="success" pill>
               supporting
             </Badge>
@@ -75,22 +76,35 @@ class Fact extends Component {
     this.toggleShowAddEvidence = this.toggleShowAddEvidence.bind(this);
     this.onChangeAddEvidenceTitle = this.onChangeAddEvidenceTitle.bind(this);
     this.onChangeAddEvidenceURL = this.onChangeAddEvidenceURL.bind(this);
-    this.onChangeAddEvidenceComment = this.onChangeAddEvidenceComment.bind(this);
-    this.onChangeAddEvidenceSupporting = this.onChangeAddEvidenceSupporting.bind(this);
+    this.onChangeAddEvidenceComment = this.onChangeAddEvidenceComment.bind(
+      this
+    );
+    this.onChangeAddEvidenceSupporting = this.onChangeAddEvidenceSupporting.bind(
+      this
+    );
+    this.onClickAddEvidence = this.onClickAddEvidence.bind(this);
     this.state = {
+      factId: this.props.match.params.factid,
       fact: {},
       allEvidence: [{}],
       addEvidenceTitle: "",
       addEvidenceURL: "",
       addEvidenceComment: "",
+      addEvidenceSupporting: "",
+      addEvidenceError: "",
+      addEvidenceUserId: "123",
       isLoading: false,
       showAddEvidence: false,
-      addEvidenceSupporting: false
+      showAddEvidenceHelp: false
     };
   }
 
   toggleShowAddEvidence() {
     this.setState({ showAddEvidence: !this.state.showAddEvidence });
+  }
+
+  toggleShowAddEvidenceHelp() {
+    this.setState({ showAddEvidenceHelp: !this.state.showAddEvidenceHelp });
   }
 
   onChangeAddEvidenceTitle(event) {
@@ -114,12 +128,45 @@ class Fact extends Component {
     });
   }
 
-  onClickAddEvidence(){
+  onClickAddEvidence() {
+    //Grab state
+    const {
+      addEvidenceTitle,
+      addEvidenceURL,
+      addEvidenceComment,
+      addEvidenceSupporting,
+      factId
+    } = this.state;
+    //send
+    fetch("/api/fact/"+ this.state.factId +"/evidence", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: addEvidenceTitle,
+        url: addEvidenceURL,
+        comment: addEvidenceComment,
+        supporting: addEvidenceSupporting,
+        user: "123"
+      })
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          this.setState({
+            addEvidenceError: json.message
+          });
+        } else {
+          this.setState({
+            addEvidenceError: json.message
+          });
+        }
+      });
   }
-  
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/fact/5c852032dd5e4e4a29ab820f")
+    fetch("http://localhost:8080/api/fact/"+ this.state.factId)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -130,13 +177,14 @@ class Fact extends Component {
   }
 
   render() {
-
     const {
       isLoading,
       addEvidenceTitle,
       addEvidenceURL,
       addEvidenceComment,
-      addEvidenceSupporting
+      addEvidenceSupporting,
+      addEvidenceError,
+      addEvidenceUserId
     } = this.state;
 
     if (isLoading) {
@@ -182,7 +230,7 @@ class Fact extends Component {
               <hr />
               <Row>
                 <Col>
-                  <h4>Evidence</h4>
+                  <h2>Evidence</h2>
                 </Col>
                 <Col>
                   {!this.state.showAddEvidence ? (
@@ -216,6 +264,15 @@ class Fact extends Component {
                         <div>
                           <div style={{ float: "right" }}>
                             <Button
+                              color="info"
+                              style={{
+                                marginRight: "30px"
+                              }}
+                              onClick={() => this.toggleShowAddEvidenceHelp()}
+                            >
+                              Help
+                            </Button>
+                            <Button
                               onClick={() => this.toggleShowAddEvidence()}
                             >
                               X
@@ -223,6 +280,59 @@ class Fact extends Component {
                           </div>
                         </div>
                       </Col>
+                    </Row>
+                    <Row>
+                      {this.state.addEvidenceError !== "" ? (
+                        this.state.addEvidenceError === "success" ? (
+                          <Row>
+                            <Alert color="success">
+                              {this.state.addEvidenceError}
+                            </Alert>
+                          </Row>
+                        ) : (
+                          <Row>
+                            <Alert color="danger">
+                              {this.state.addEvidenceError}
+                            </Alert>
+                          </Row>
+                        )
+                      ) : null}
+                      {this.state.showAddEvidenceHelp ? (
+                        <Row>
+                          <Alert color="info">
+                            <Row>
+                              <Col>
+                                <h3>Help Posting A Fact for Checking</h3>
+                              </Col>
+                              <Col>
+                                <Button
+                                  style={{
+                                    float: "right",
+                                    backgroundColor: "#0c5460",
+                                    color: "#d1ecf1"
+                                  }}
+                                  onClick={() =>
+                                    this.toggleShowAddEvidenceHelp()
+                                  }
+                                >
+                                  X
+                                </Button>
+                              </Col>
+                            </Row>
+                            <ol type="i">
+                              <li>Title should be concise and descriptive</li>
+                              <li>URL should be of format xxxxx </li>
+                              <li>Comment should be</li>
+                              <li>
+                                Supporting should be selected based on your
+                                opinion Supporting should be selected based on
+                                your opinion Supporting should be selected based
+                                on your opinion
+                              </li>
+                            </ol>
+                          </Alert>
+                        </Row>
+                      ) : null}
                     </Row>
                     <Form>
                       <Row>
@@ -245,7 +355,7 @@ class Fact extends Component {
                           <FormGroup>
                             <Label for="url">URL</Label>
                             <Input
-                              type="email"
+                              type="text"
                               name="url"
                               id="url"
                               placeholder="enter url"
@@ -278,15 +388,15 @@ class Fact extends Component {
                             </Label>
                             <Input
                               type="select"
-                              name="select"
-                              id="exampleSelect"
-                              style={{ width: "200px" }}
+                              name="evidenceSupporting"
+                              id="evidenceSupporting"
+                              style={{ maxWidth: "200px" }}
                               onChange={this.onChangeAddEvidenceSupporting}
                               value={addEvidenceSupporting}
                             >
-                              <option>Supporting</option>
-                              <option>Opposing</option>
-                              <option>unsure</option>
+                              <option value="supporting">Supporting</option>
+                              <option value="opposing">Opposing</option>
+                              <option value="inconclusive">inconclusive</option>
                             </Input>
                           </FormGroup>
                         </Col>
@@ -295,7 +405,8 @@ class Fact extends Component {
                             style={{
                               position: "absolute",
                               bottom: "0",
-                              right: "0"
+                              right: "0",
+                              fontSize: "150%"
                             }}
                             color="primary"
                             onClick={this.onClickAddEvidence}

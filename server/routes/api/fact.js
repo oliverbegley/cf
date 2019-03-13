@@ -66,11 +66,36 @@ module.exports = app => {
     evidence.url = req.body.url;
     evidence.title = req.body.title;
     evidence.user = req.body.user;
-    evidence.comment = req.body.title;
+    evidence.comment = req.body.comment;
     evidence.supporting = req.body.supporting;
     evidence.date = Date.now();
 
     var id = req.params.id;
+    if(!evidence.title){
+      return res.send({
+        success: false,
+        message: 'Error: title must be at least 250.'
+      })
+    }
+    if(!evidence.url){
+      return res.send({
+        success: false,
+        message: 'Error: url cannot be blank.'
+      })
+    }
+    if(!evidence.comment){
+      return res.send({
+        success: false,
+        message: 'Error: comment cannot be blank.'
+      })
+    }
+    if(!evidence.supporting){
+      return res.send({
+        success: false,
+        message: 'Error: supporting/opposing evidence cannot be blank.'
+      })
+    }
+
     Fact.findOne({_id: ObjectID(id)})
     .exec()
     .then(function(fact){
@@ -79,7 +104,7 @@ module.exports = app => {
     });
     return res.send({
       success: true,
-      message: 'evidence added',
+      message: 'success',
       evidence: evidence
     })
   })

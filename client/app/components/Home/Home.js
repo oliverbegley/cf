@@ -37,22 +37,6 @@ class Home extends React.Component {
     this.setState({ isLoading: true });
   }
 
-  componentDidMount() {
-    fetch("/api/fact/facts")
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({
-          facts: data,
-          query: ""
-        });
-      })
-      .catch(err => {
-        // Do something for an error here
-      });
-    console.log(this.state);
-  }
 
   operation() {
     this.setState({ showHelp: !this.state.showHelp });

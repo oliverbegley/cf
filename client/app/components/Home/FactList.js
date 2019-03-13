@@ -1,61 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Jumbotron, Badge } from "reactstrap";
+import { Jumbotron, Badge,Button } from "reactstrap";
 
 const FactRow = props => (
   <Jumbotron>
-    <h4>{props.fact.title} <Badge color="warning">{props.fact.subject}</Badge></h4>
-    <p>{props.fact.description}</p>
+    <h4>{props.fact.title}</h4><Badge color="warning" pill>{props.fact.subject}</Badge>
+    <p>{getDescriptionShort(props.fact.description)}</p>
+    <Link to={"/fact/"+props.fact._id}><Button>view</Button></Link>
   </Jumbotron>
 );
 
 function FactTable(props) {
   const factRows = props.facts.map(fact => (
-    <FactRow key={fact.id} fact={fact} />
+    <FactRow key={fact._id} fact={fact} />
   ));
   return (
       <div>{factRows}</div>
   );
 }
 
-const facts = [
-  {
-    id: 0,
-    title: "TestFact",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
-    userId: "",
-    creationDate: "",
-    subject: "science",
-    upvoters: ["Peter", "Graham", "Joel"],
-    downvoters: ["Saul", "Alex", "PublicEnemE"],
-    evidence: ["evidence1", "evidence2", "evidence2"]
-  },
-  {
-    id: 1,
-    title: "Another One",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
-    userId: "",
-    creationDate: "",
-    subject: "sport",
-    upvoters: ["Iain", "Craig", "Bob"],
-    downvoters: ["Lain", "Garry", "Shaun"],
-    evidence: ["e1", "e2", "e3"]
-  },
-  {
-    id: 3,
-    title: "All you can hear is these YEOS",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida arcu nec ex tincidunt commodo. Etiam in convallis lorem. In quam risus, consequat at al",
-    userId: "",
-    creationDate: "",
-    subject: "politics",
-    upvoters: ["Alan", "Alice", "Arvile"],
-    downvoters: ["Adonis", "Arge", "Axl"],
-    evidence: ["d1", "d2", "dnsands"]
+function getDescriptionShort(description){
+  if(description.length > 150){
+    return description.substring(0,150) + "...";
+  }else{
+    return description;
   }
-];
+}
 
 class FactList extends React.Component {
   constructor() {
