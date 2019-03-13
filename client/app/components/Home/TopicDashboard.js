@@ -29,7 +29,7 @@ class TopicDashboard extends React.Component {
             <Card inverse>
               <CardImg width="100%" src={businessImage} alt="Card image cap"/>
               <CardImgOverlay>
-                <CardTitle><Badge color='warning'>Business</Badge></CardTitle>
+                <CardTitle><Badge color='light'><h3>Business</h3></Badge></CardTitle>
               </CardImgOverlay>
             </Card>
             </Link>
@@ -38,7 +38,7 @@ class TopicDashboard extends React.Component {
             <Card inverse>
               <CardImg width="100%" src={politicsImage} alt="Card image cap" />
               <CardImgOverlay>
-                <CardTitle><Badge color='warning'>Politics</Badge></CardTitle>
+                <CardTitle><Badge color='light'><h3>Politics</h3></Badge></CardTitle>
               </CardImgOverlay>
             </Card>
             </Link>
@@ -47,7 +47,7 @@ class TopicDashboard extends React.Component {
             <Card inverse>
               <CardImg width="100%" src={sportImage} alt="Card image cap" />
               <CardImgOverlay>
-                <CardTitle><Badge color='warning'>Sport</Badge></CardTitle>
+                <CardTitle><Badge color='light'><h3>Sport</h3></Badge></CardTitle>
               </CardImgOverlay>
             </Card>
             </Link>
@@ -57,7 +57,7 @@ class TopicDashboard extends React.Component {
           <Card inverse>
             <CardImg width="100%" src={environmentImage} alt="Card image cap" />
             <CardImgOverlay>
-              <CardTitle><Badge color='warning'>Environment</Badge></CardTitle>
+              <CardTitle><Badge color='light'><h3>Environment</h3></Badge></CardTitle>
             </CardImgOverlay>
           </Card>
           </Link>
@@ -66,7 +66,7 @@ class TopicDashboard extends React.Component {
           <Card inverse>
             <CardImg width="100%" src={scienceImage} alt="Card image cap" />
             <CardImgOverlay>
-              <CardTitle><Badge color='warning'>Science</Badge></CardTitle>
+              <CardTitle><Badge color='light'><h3>Science</h3></Badge></CardTitle>
             </CardImgOverlay>
           </Card>
           </Link>
@@ -75,7 +75,7 @@ class TopicDashboard extends React.Component {
           <Card inverse>
             <CardImg width="100%" src={technologyImage} alt="Card image cap" />
             <CardImgOverlay>
-              <CardTitle><Badge color='warning'>Technology</Badge></CardTitle>
+              <CardTitle><Badge color='light'><h3>Technology</h3></Badge></CardTitle>
             </CardImgOverlay>
           </Card>
           </Link>

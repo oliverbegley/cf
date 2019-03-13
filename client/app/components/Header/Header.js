@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -37,7 +38,7 @@ export default class Header extends React.Component {
     return (
       <div>
         <Navbar color="light" light expand="md" style={{height: "10%"}}>
-          <NavbarBrand href="/"><img src={logo} style={{height:"60px",borderRadius:"15px", border:'2px solid #888889'}}></img></NavbarBrand>
+          <Link to="/"><img src={logo} style={{height:"60px",borderRadius:"15px", border:'2px solid #888889'}}></img></Link>
           <NavbarToggler onClick={this.toggle} />
 
           <Collapse isOpen={this.state.isOpen} navbar>
