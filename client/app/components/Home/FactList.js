@@ -6,7 +6,7 @@ const FactRow = props => (
   <Jumbotron>
     <h4>{props.fact.title}</h4><Badge color="warning" pill>{props.fact.subject}</Badge>
     <p>{getDescriptionShort(props.fact.description)}</p>
-    <Link to={"/fact/"+props.fact._id}><Button>view</Button></Link>
+    <Link to={"/fact/"+props.fact._id}><Button style={{width: '100%'}}>view</Button></Link>
   </Jumbotron>
 );
 

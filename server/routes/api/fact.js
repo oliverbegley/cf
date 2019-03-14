@@ -108,4 +108,15 @@ module.exports = app => {
       evidence: evidence
     })
   })
+
+  app.get("/api/fact/:queryname/:querysubject", (req, res, next) => {
+    var queryname = req.params.queryname;
+    var querysubject = req.params.querysubject;
+    var num = parseInt(req.params.num);
+    Fact.find({title: queryname}).sort([['creationDate', -1]]).limit(10)
+    .exec()
+    .then((facts)=> res.json(
+      facts))
+    .catch((err)=>next(err));
+  });
 };

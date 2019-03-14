@@ -81,7 +81,7 @@ class Home extends React.Component {
                     }}
                   />
                   <InputGroupAddon addonType="prepend">
-                  <Link to={{ pathname: "/searchresults", search:"?query"+this.state.query}}>
+                  <Link to={{ pathname: "/searchresults", search:"?name="+this.state.query}}>
                     <Button
                       color="primary"
                       style={{ height: "100%" }}

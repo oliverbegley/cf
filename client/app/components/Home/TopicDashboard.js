@@ -25,57 +25,57 @@ class TopicDashboard extends React.Component {
         <Row>
         
           <Col xs='12' md='6'>
-          <Link to={{ pathname: "/search", search:"?subject=business"}}>
+          <Link to={{ pathname: "/searchresults", search:"?subject=business"}}>
             <Card inverse>
               <CardImg width="100%" src={businessImage} alt="Card image cap"/>
               <CardImgOverlay>
-                <CardTitle><Badge color='light'><h3>Business</h3></Badge></CardTitle>
+                <CardTitle><Badge color='light'><h4>Business</h4></Badge></CardTitle>
               </CardImgOverlay>
             </Card>
             </Link>
             <br />
-            <Link to={{ pathname: "/search", search:"?subject=politics"}}>
+            <Link to={{ pathname: "/searchresults", search:"?subject=politics"}}>
             <Card inverse>
               <CardImg width="100%" src={politicsImage} alt="Card image cap" />
               <CardImgOverlay>
-                <CardTitle><Badge color='light'><h3>Politics</h3></Badge></CardTitle>
+                <CardTitle><Badge color='light'><h4>Politics</h4></Badge></CardTitle>
               </CardImgOverlay>
             </Card>
             </Link>
             <br />
-            <Link to={{ pathname: "/search", search:"?subject=sport"}}>
+            <Link to={{ pathname: "/searchresults", search:"?subject=sport"}}>
             <Card inverse>
               <CardImg width="100%" src={sportImage} alt="Card image cap" />
               <CardImgOverlay>
-                <CardTitle><Badge color='light'><h3>Sport</h3></Badge></CardTitle>
+                <CardTitle><Badge color='light'><h4>Sport</h4></Badge></CardTitle>
               </CardImgOverlay>
             </Card>
             </Link>
           </Col>
           <Col xs='12' md='6'>
-          <Link to={{ pathname: "/search", search:"?subject=enviornment"}}>
+          <Link to={{ pathname: "/searchresults", search:"?subject=enviornment"}}>
           <Card inverse>
             <CardImg width="100%" src={environmentImage} alt="Card image cap" />
             <CardImgOverlay>
-              <CardTitle><Badge color='light'><h3>Environment</h3></Badge></CardTitle>
+              <CardTitle><Badge color='light'><h4>Environment</h4></Badge></CardTitle>
             </CardImgOverlay>
           </Card>
           </Link>
           <br />
-          <Link to={{ pathname: "/search", search:"?subject=science"}}>
+          <Link to={{ pathname: "/searchresults", search:"?subject=science"}}>
           <Card inverse>
             <CardImg width="100%" src={scienceImage} alt="Card image cap" />
             <CardImgOverlay>
-              <CardTitle><Badge color='light'><h3>Science</h3></Badge></CardTitle>
+              <CardTitle><Badge color='light'><h4>Science</h4></Badge></CardTitle>
             </CardImgOverlay>
           </Card>
           </Link>
           <br />
-          <Link to={{ pathname: "/search", search:"?subject=technology"}}>
+          <Link to={{ pathname: "/searchresults", search:"?subject=technology"}}>
           <Card inverse>
             <CardImg width="100%" src={technologyImage} alt="Card image cap" />
             <CardImgOverlay>
-              <CardTitle><Badge color='light'><h3>Technology</h3></Badge></CardTitle>
+              <CardTitle><Badge color='light'><h4>Technology</h4></Badge></CardTitle>
             </CardImgOverlay>
           </Card>
           </Link>

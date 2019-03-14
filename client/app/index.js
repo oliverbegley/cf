@@ -33,7 +33,7 @@ render((
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={LogIn} />
         <Route path="/profile/:userid" component={ProfileDashboard}/>
-        <Route path="/searchresults/:searchstring" component={SearchResults}/>
+        <Route path="/searchresults" component={SearchResults}/>
         <Route path="/fact/addFact" component={AddFact} />
         <Route path="/fact/:factid" component={Fact} />
         <Route component={NotFound}/>
