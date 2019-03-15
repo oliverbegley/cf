@@ -119,4 +119,17 @@ module.exports = app => {
       facts))
     .catch((err)=>next(err));
   });
+
+  app.get("/api/fact/", (req, res, next) => {
+
+    let subject = req.query.subject;
+    let searchstring = req.query.searchstring;
+
+
+    Fact.find({subject: subject}).sort([['creationDate', -1]]).limit(10)
+    .exec()
+    .then((facts)=> res.json(
+      facts))
+    .catch((err)=>next(err));
+  });
 };

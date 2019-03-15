@@ -13,6 +13,7 @@ import {
   Form,
   Alert
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 var getLocation = function(href) {
   var l = document.createElement("a");
@@ -199,12 +200,14 @@ class Fact extends Component {
               <Row>
                 <h1>
                   {this.state.fact.title}
+                  <Link to={{ pathname: "/searchresults", search:"?subject="+this.state.fact.subject}}>
                   <Badge
                     color="warning"
                     style={{ margin: "0px 10px 0px 10px" }}
                   >
                     {this.state.fact.subject}
                   </Badge>
+                  </Link>
                 </h1>
               </Row>
               <Row>

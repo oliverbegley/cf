@@ -196,7 +196,7 @@ export default class AddFact extends React.Component {
                   value={subject}
                 >
                   <option>business</option>
-                  <option>enviornment</option>
+                  <option>environment</option>
                   <option>politics</option>
                   <option>science</option>
                   <option>sport</option>

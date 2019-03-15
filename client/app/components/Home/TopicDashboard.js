@@ -53,7 +53,7 @@ class TopicDashboard extends React.Component {
             </Link>
           </Col>
           <Col xs='12' md='6'>
-          <Link to={{ pathname: "/searchresults", search:"?subject=enviornment"}}>
+          <Link to={{ pathname: "/searchresults", search:"?subject=environment"}}>
           <Card inverse>
             <CardImg width="100%" src={environmentImage} alt="Card image cap" />
             <CardImgOverlay>

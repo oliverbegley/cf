@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Badge, Button, Container, Row, Col } from "reactstrap";
+const queryString = require("query-string");
 
 const FactRow = props => (
   <Jumbotron style={{ padding: "2rem 2rem" }}>
@@ -15,7 +16,9 @@ const FactRow = props => (
       </Col>
     </Row>
     <Row>
-      <Col><i>Posted on: {props.fact.creationDate.substring(0,10)}</i></Col>
+      <Col>
+        <i>Posted on: {props.fact.creationDate.substring(0, 10)}</i>
+      </Col>
     </Row>
     <Row>
       <Col>{props.fact.description}</Col>
@@ -45,20 +48,23 @@ class SearchResults extends Component {
 
     this.state = {
       isLoading: true,
-      query: this.props.location.search,
+      searchString: "",
+      subject: "",
       facts: []
     };
   }
 
   componentDidMount() {
-    fetch("/api/fact/recent/10")
+    const parsedQuery = queryString.parse(location.search);
+    this.setState({searchString: parsedQuery.searchstring, subject: parsedQuery.subject});
+    fetch("/api/fact/?subject=" + parsedQuery.subject +"&searchstring="+ parsedQuery.searchstring)
       .then(response => response.json())
       .then(facts => this.setState({ facts }));
     this.setState({ isLoading: false });
   }
 
   render() {
-    const { isLoading, query } = this.state;
+    const { isLoading  } = this.state;
 
     if (isLoading) {
       return (
@@ -80,10 +86,16 @@ class SearchResults extends Component {
     return (
       <Container>
         <Row>
-          <h2>Showing results for {this.state.query}</h2>
+          <h1>Showing results for <i>{this.state.searchString}{this.state.subject}</i></h1>
         </Row>
         <hr />
-        <FactTable facts={this.state.facts} />
+        {this.state.facts.length === 0?
+        (
+          <h3>no results available</h3>
+        ):
+        (<FactTable facts={this.state.facts} />)
+        }
+        
       </Container>
     );
   }

@@ -23,6 +23,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.state = {
       query: "",
@@ -41,6 +42,11 @@ class Home extends React.Component {
   operation() {
     this.setState({ showHelp: !this.state.showHelp });
   }
+
+  onChangeQuery(event) {
+    this.setState({ query: event.target.value });
+  }
+
   
   render() {
     const { query, facts, isLoading } = this.state;
@@ -75,13 +81,11 @@ class Home extends React.Component {
                     name="search"
                     id="search"
                     placeholder="search a fact here..."
-                    value={this.state.query}
-                    onChange={event => {
-                      this.setState({ query: event.target.value });
-                    }}
+                    onChange={this.onChangeQuery}
+                    value={query}
                   />
                   <InputGroupAddon addonType="prepend">
-                  <Link to={{ pathname: "/searchresults", search:"?name="+this.state.query}}>
+                  <Link to={{ pathname: "/searchresults", search:"?searchstring="+this.state.query}}>
                     <Button
                       color="primary"
                       style={{ height: "100%" }}
