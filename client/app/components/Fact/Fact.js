@@ -175,7 +175,10 @@ class Fact extends Component {
           allEvidence: json.evidence
         });
       });
+    
   }
+
+
 
   render() {
     const {
@@ -187,6 +190,8 @@ class Fact extends Component {
       addEvidenceError,
       addEvidenceUserId
     } = this.state;
+    var dateobj = new Date(this.state.fact.creationDate);
+    var B = dateobj.toString().substring(0,15); 
 
     if (isLoading) {
       return <div>Not just yet chief</div>;
@@ -200,6 +205,7 @@ class Fact extends Component {
               <Row>
                 <h1>
                   {this.state.fact.title}
+                  
                   <Link to={{ pathname: "/searchresults", search:"?subject="+this.state.fact.subject}}>
                   <Badge
                     color="warning"
@@ -211,7 +217,7 @@ class Fact extends Component {
                 </h1>
               </Row>
               <Row>
-                <i>Posted on : {this.state.fact.creationDate}</i>
+                <i>Posted on : {B}</i>
               </Row>
               <hr />
               <Row style={{ color: "grey" }} />

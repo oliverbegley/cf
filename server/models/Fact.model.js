@@ -10,7 +10,7 @@ const FactSchema = new mongoose.Schema({
   },
   creationDate: {
     type: Date,
-    default: null
+    default: Date.now()
   },
   subject:{
     type: String,
