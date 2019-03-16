@@ -95,7 +95,7 @@ class Home extends Component {
   }
 
   onTextboxChangeSignUpCountry(event) {
-    this.setState({ onTextboxChangeSignUpCountry: event.target.value });
+    this.setState({ signUpCountry: event.target.value });
   }
 
   onTextboxChangeSignUpPassword(event) {
