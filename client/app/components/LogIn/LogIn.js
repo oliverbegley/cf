@@ -29,7 +29,8 @@ class LogIn extends Component {
       signInError: "",
       signInEmail: "",
       signInPassword: "",
-      tokenTest: getFromStorage("the_main_app")
+      tokenTest: getFromStorage("the_main_app"),
+      userId: ""
     };
 
     this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(
@@ -69,7 +70,6 @@ class LogIn extends Component {
         isLoading: false
       });
     }
-    console.log(this.state);
   }
 
   onTextboxChangeSignInEmail(event) {
@@ -87,6 +87,7 @@ class LogIn extends Component {
   onSignIn() {
     // Grab state
     const { signInEmail, signInPassword } = this.state;
+    var userId;
     this.setState({
       isLoading: true
     });
@@ -103,7 +104,10 @@ class LogIn extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        console.log("json", json);
+        userId = json.userId.valueOf();
+        console.log("/profile/"+userId);
+        console.log("User ID =" ,userId);
+        console.log(typeof userId);
         if (json.success) {
           setInStorage("the_main_app", { token: json.token });
           this.setState({
@@ -111,16 +115,16 @@ class LogIn extends Component {
             isLoading: false,
             signInPassword: "",
             signInEmail: "",
-            token: json.token
+            token: json.token,
           });
+          this.props.history.push("/profile/"+userId);
         } else {
           this.setState({
             signInError: json.message,
             isLoading: false
           });
         }
-      });
-      console.log(this.state);
+      })
   }
 
   logout() {
@@ -176,7 +180,6 @@ class LogIn extends Component {
           <div style={{ padding: "50px" }}>
             {signInError ? <Alert color="danger">{signInError}</Alert> : null}
             <div style={{ textAlign: "center" }}>
-            {this.tokenTest}
               <Jumbotron style={{display: "inline-block", minWidth: "50%", textAlign:"left"}}>
                 <div>
                   <h1>Sign In</h1>

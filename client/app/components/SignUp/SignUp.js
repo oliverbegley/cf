@@ -184,6 +184,7 @@ class Home extends Component {
           });
         }
       });
+      this.props.history.push("/");
   }
 
   logout() {
