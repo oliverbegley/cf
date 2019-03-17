@@ -1,11 +1,11 @@
 {
-  "name": "ComFact",
+  "name": "comfact",
   "version": "1.0.0",
-  "description": "MERN stack project boilerplate",
-  "author": "Eugene Cheung",
+  "description": "Comfact - Fact Verification Web Application",
+  "author": "Oliver Begley",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arkon/MERN-boilerplate.git"
+    "url": "git+https://github.com/oliverbegley/cf"
   },
   "license": "MIT",
   "private": true,

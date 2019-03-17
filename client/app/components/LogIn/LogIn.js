@@ -17,6 +17,8 @@ import {
 import loading from '../../../public/assets/gif/loading.gif';
 import ProfileDashboard from "../ProfileDashboard/ProfileDashboard"
 
+var tokenTest = "";
+
 class LogIn extends Component {
   constructor(props) {
     super(props);
@@ -24,12 +26,10 @@ class LogIn extends Component {
     this.state = {
       isLoading: true,
       token: "",
-      signUpError: "",
       signInError: "",
       signInEmail: "",
       signInPassword: "",
-      signUpEmail: "",
-      signUpPassword: ""
+      tokenTest: getFromStorage("the_main_app")
     };
 
     this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(
@@ -43,10 +43,12 @@ class LogIn extends Component {
     this.logout = this.logout.bind(this);
   }
 
+  
   componentDidMount() {
-    const obj = getFromStorage("ComFact");
+    const obj = getFromStorage("the_main_app");
     if (obj && obj.token) {
       const { token } = obj;
+      console.log()
       // Verify token
       fetch("/api/account/verify?token=" + token)
         .then(res => res.json())
@@ -67,6 +69,7 @@ class LogIn extends Component {
         isLoading: false
       });
     }
+    console.log(this.state);
   }
 
   onTextboxChangeSignInEmail(event) {
@@ -117,6 +120,7 @@ class LogIn extends Component {
           });
         }
       });
+      console.log(this.state);
   }
 
   logout() {
@@ -172,6 +176,7 @@ class LogIn extends Component {
           <div style={{ padding: "50px" }}>
             {signInError ? <Alert color="danger">{signInError}</Alert> : null}
             <div style={{ textAlign: "center" }}>
+            {this.tokenTest}
               <Jumbotron style={{display: "inline-block", minWidth: "50%", textAlign:"left"}}>
                 <div>
                   <h1>Sign In</h1>

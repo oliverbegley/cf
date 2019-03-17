@@ -58,7 +58,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const obj = getFromStorage("ComFact");
+    const obj = getFromStorage("the_main_app");
     if (obj && obj.token) {
       const { token } = obj;
       // Verify token
@@ -108,7 +108,7 @@ class Home extends Component {
 
   onSignUp() {
     // Grab state
-    const { signUpEmail, signUpPassword } = this.state;
+    const { signUpEmail, signUpPassword, signUpFirstName, signUpSurname, signUpCountry } = this.state;
 
     this.setState({
       isLoading: true
@@ -122,7 +122,10 @@ class Home extends Component {
       },
       body: JSON.stringify({
         email: signUpEmail,
-        password: signUpPassword
+        password: signUpPassword,
+        firstName: signUpFirstName,
+        surname: signUpSurname,
+        country: signUpCountry,
       })
     })
       .then(res => res.json())
@@ -142,6 +145,7 @@ class Home extends Component {
           });
         }
       });
+      console.log(this.state);
   }
 
   onSignIn() {
@@ -285,7 +289,7 @@ class Home extends Component {
                 <Col>
                   <FormGroup>
                     <Label for="exampleSelect">Select</Label>
-                    <Input type="select" name="select" id="exampleSelect">
+                    <Input type="select" name="select" id="exampleSelect" value={signUpCountry} onChange={this.onTextboxChangeSignUpCountry}>
                       <option value="">Country...</option>
                       <option value="AF">Afghanistan</option>
                       <option value="AL">Albania</option>
