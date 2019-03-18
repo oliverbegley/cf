@@ -17,8 +17,6 @@ import {
 import loading from '../../../public/assets/gif/loading.gif';
 import ProfileDashboard from "../ProfileDashboard/ProfileDashboard"
 
-var tokenTest = "";
-
 class LogIn extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +27,6 @@ class LogIn extends Component {
       signInError: "",
       signInEmail: "",
       signInPassword: "",
-      tokenTest: getFromStorage("the_main_app"),
       userId: ""
     };
 

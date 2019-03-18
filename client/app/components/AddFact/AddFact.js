@@ -11,6 +11,7 @@ import {
   Alert,
   Button
 } from "reactstrap";
+import { getFromStorage } from "../../utils/storage.js";
 
 export default class AddFact extends React.Component {
   constructor(props) {
@@ -20,7 +21,8 @@ export default class AddFact extends React.Component {
       title: "",
       subject: "",
       description: "",
-      addFactError: ""
+      addFactError: "",
+      isLoggedIn: false
     };
 
     this.onTextboxChangeTitle = this.onTextboxChangeTitle.bind(this);
@@ -90,15 +92,40 @@ export default class AddFact extends React.Component {
       });
   }
 
+  componentDidMount() {
+    const obj = getFromStorage("the_main_app");
+    if (obj && obj.token) {
+      const { token } = obj;
+      // Verify token
+      fetch("/api/account/verify?token=" + token)
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            console.log("success");
+            this.setState({isLoggedIn: true})
+          } else {
+            console.log("failure");
+          }
+        });
+    } else {
+      this.setState({
+        isLoading: false
+      });
+    }
+  }
+
   render() {
     const {
       title,
       subject,
       description,
-      addFactError
+      addFactError,
+      isLoggedIn
     } = this.state;
 
+    if(isLoggedIn)
     return (
+      
       <Jumbotron style={{ margin: "70px", marginBottom:'150px' }}>
         <Container>
           <Form>
@@ -236,6 +263,11 @@ export default class AddFact extends React.Component {
           </Form>
         </Container>
       </Jumbotron>
-    );
+    )
+    return(
+      <Jumbotron>
+        Please Log in to continue
+      </Jumbotron>
+    )
   }
 }
