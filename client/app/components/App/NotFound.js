@@ -4,7 +4,7 @@ import { Jumbotron, Button } from "reactstrap";
 
 
 const NotFound = () => (
-  <div style={{ height: "100%" }}>
+  <div style={{height:"700px"}}>
     <Jumbotron
       style={{
         position: "absolute",

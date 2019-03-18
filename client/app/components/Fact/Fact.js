@@ -14,6 +14,7 @@ import {
   Alert
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { getFromStorage } from "../../utils/storage.js";
 
 var getLocation = function(href) {
   var l = document.createElement("a");
@@ -84,6 +85,7 @@ class Fact extends Component {
       this
     );
     this.onClickAddEvidence = this.onClickAddEvidence.bind(this);
+
     this.state = {
       factId: this.props.match.params.factid,
       fact: {},
@@ -93,8 +95,9 @@ class Fact extends Component {
       addEvidenceComment: "",
       addEvidenceSupporting: "",
       addEvidenceError: "",
-      addEvidenceUserId: "123",
+      userId: "",
       isLoading: false,
+      isLoggedIn: false,
       showAddEvidence: false,
       showAddEvidenceHelp: false
     };
@@ -139,7 +142,7 @@ class Fact extends Component {
       factId
     } = this.state;
     //send
-    fetch("/api/fact/"+ this.state.factId +"/evidence", {
+    fetch("/api/fact/" + this.state.factId + "/evidence", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -167,7 +170,7 @@ class Fact extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/fact/"+ this.state.factId)
+    fetch("http://localhost:8080/api/fact/" + this.state.factId)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -175,10 +178,25 @@ class Fact extends Component {
           allEvidence: json.evidence
         });
       });
-    
+    const obj = getFromStorage("the_main_app");
+    if (obj && obj.token) {
+      const { token } = obj;
+      // Verify token
+      fetch("/api/account/verify?token=" + token)
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            this.setState({ isLoggedIn: true, userId: json.userId });
+          } else {
+            this.setState({ isLoggedIn: false });
+          }
+        });
+    } else {
+      this.setState({
+        isLoading: false
+      });
+    }
   }
-
-
 
   render() {
     const {
@@ -188,10 +206,11 @@ class Fact extends Component {
       addEvidenceComment,
       addEvidenceSupporting,
       addEvidenceError,
-      addEvidenceUserId
+      userId,
+      isLoggedIn
     } = this.state;
     var dateobj = new Date(this.state.fact.creationDate);
-    var B = dateobj.toString().substring(0,15); 
+    var B = dateobj.toString().substring(0, 15);
 
     if (isLoading) {
       return <div>Not just yet chief</div>;
@@ -205,14 +224,18 @@ class Fact extends Component {
               <Row>
                 <h1>
                   {this.state.fact.title}
-                  
-                  <Link to={{ pathname: "/searchresults", search:"?subject="+this.state.fact.subject}}>
-                  <Badge
-                    color="warning"
-                    style={{ margin: "0px 10px 0px 10px" }}
+                  <Link
+                    to={{
+                      pathname: "/searchresults",
+                      search: "?subject=" + this.state.fact.subject
+                    }}
                   >
-                    {this.state.fact.subject}
-                  </Badge>
+                    <Badge
+                      color="warning"
+                      style={{ margin: "0px 10px 0px 10px" }}
+                    >
+                      {this.state.fact.subject}
+                    </Badge>
                   </Link>
                 </h1>
               </Row>
@@ -242,7 +265,12 @@ class Fact extends Component {
                   <h2>Evidence</h2>
                 </Col>
                 <Col>
-                  {!this.state.showAddEvidence ? (
+                  {!this.state.isLoggedIn ? (
+                    <div style={{ float: "right" }}>
+                      <Link to="/login"><Button color='warning'>You must be logged in to add evidence</Button></Link>
+                    </div>
+                  ) : (
+                    !this.state.showAddEvidence ? (
                     <div>
                       <div style={{ float: "right" }}>
                         <Button
@@ -253,7 +281,9 @@ class Fact extends Component {
                         </Button>
                       </div>
                     </div>
-                  ) : null}
+                  ) : null
+                  )}
+                  
                 </Col>
               </Row>
               {this.state.showAddEvidence ? (

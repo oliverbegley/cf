@@ -11,6 +11,7 @@ import {
   Alert,
   Button
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import { getFromStorage } from "../../utils/storage.js";
 
 export default class AddFact extends React.Component {
@@ -22,16 +23,13 @@ export default class AddFact extends React.Component {
       subject: "",
       description: "",
       addFactError: "",
-      isLoggedIn: false
+      isLoggedIn: false,
+      userId: ""
     };
 
     this.onTextboxChangeTitle = this.onTextboxChangeTitle.bind(this);
-
     this.onSelectChangeSubject = this.onSelectChangeSubject.bind(this);
-
-    this.onTextboxChangeDescription = this.onTextboxChangeDescription.bind(
-      this
-    );
+    this.onTextboxChangeDescription = this.onTextboxChangeDescription.bind(this);
 
     this.onAddFact = this.onAddFact.bind(this);
   }
@@ -64,7 +62,7 @@ export default class AddFact extends React.Component {
 
   onAddFact() {
     //Grab state
-    const { title, subject, description } = this.state;
+    const { title, subject, description, userId } = this.state;
     //send
     fetch("/api/fact/facts", {
       method: "POST",
@@ -74,7 +72,7 @@ export default class AddFact extends React.Component {
       body: JSON.stringify({
         title: title,
         subject: subject,
-        userId: "123",
+        userId: userId,
         description: description
       })
     })
@@ -82,11 +80,17 @@ export default class AddFact extends React.Component {
       .then(json => {
         if (json.success) {
           this.setState({
-            isLoading: false
+            isLoading: false,
+            title: "",
+            subject: "",
+            description: ""
           });
         } else {
           this.setState({
-            addFactError: json.message
+            addFactError: json.message,
+            title: "",
+            subject: "",
+            description: ""
           });
         }
       });
@@ -101,10 +105,9 @@ export default class AddFact extends React.Component {
         .then(res => res.json())
         .then(json => {
           if (json.success) {
-            console.log("success");
-            this.setState({isLoggedIn: true})
+            this.setState({ isLoggedIn: true, userId: json.userId });
           } else {
-            console.log("failure");
+            this.setState({ isLoggedIn: false });
           }
         });
     } else {
@@ -120,154 +123,175 @@ export default class AddFact extends React.Component {
       subject,
       description,
       addFactError,
-      isLoggedIn
+      isLoggedIn,
+      userId
     } = this.state;
 
-    if(isLoggedIn)
-    return (
-      
-      <Jumbotron style={{ margin: "70px", marginBottom:'150px' }}>
-        <Container>
-          <Form>
-            {this.state.addFactError ? (
-              <div>
-                <Row>
-                  <Col>
-                    <Alert color="danger" style={{ height: "100%" }}>
-                      {addFactError}{" "}
-                      <Button
-                        color="danger"
-                        style={{ float: "right" }}
-                        onClick={() => this.closeErrorMessage()}
-                      >
-                        X
-                      </Button>
-                    </Alert>
-                  </Col>
-                </Row>
-                <br />
-              </div>
-            ) : null}
-            <Row>
-              <Col sm="8" md="11">
-                <h1>Add Fact</h1>
-              </Col>
-              <Col sm="4" md="1">
-                {!this.state.showAddFactHelp ? (
-                  <img
-                    src="https://img.icons8.com/flat_round/50/000000/question-mark.png"
-                    title="Help"
-                    style={{ height: "30px", cursor: "pointer" }}
-                    onClick={() => this.toggleShowHelpAddFact()}
-                  />
-                ) : null}
-              </Col>
-            </Row>
-            {this.state.showAddFactHelp ? (
-              <Row>
-                <Col>
-                  <Alert color="info">
-                    <Row>
-                      <Col xl="11">
-                        <h2>Community Guidelines</h2>
-                        <ol type="i">
-                          <li>Title should be concise and descriptive</li>
-                          <li>
-                            Research existing posts before posting to see if
-                            there is any existing content that may provide you
-                            with some answers
-                          </li>
-                          <li>
-                            Use impartial language to remove potential biases
-                          </li>
-                          <li>
-                            Refer to the terms and conditions for more
-                            information
-                          </li>
-                        </ol>
-                      </Col>
-                      <Col xl="1">
+    if (isLoggedIn)
+      return (
+        <Jumbotron style={{ margin: "70px", marginBottom: "150px" }}>
+          <Container>
+            <Form>
+              {this.state.addFactError ? (
+                <div>
+                  <Row>
+                    <Col>
+                      <Alert color="danger" style={{ height: "100%" }}>
+                        {addFactError}{" "}
                         <Button
-                          color="info"
-                          onClick={() => this.toggleShowHelpAddFact()}
+                          color="danger"
+                          style={{ float: "right" }}
+                          onClick={() => this.closeErrorMessage()}
                         >
                           X
                         </Button>
-                      </Col>
-                    </Row>
-                  </Alert>
+                      </Alert>
+                    </Col>
+                  </Row>
+                  <br />
+                </div>
+              ) : null}
+              <Row>
+                <Col sm="8" md="11">
+                  <h1>Add Fact</h1>
+                </Col>
+                <Col sm="4" md="1">
+                  {!this.state.showAddFactHelp ? (
+                    <img
+                      src="https://img.icons8.com/flat_round/50/000000/question-mark.png"
+                      title="Help"
+                      style={{ height: "30px", cursor: "pointer" }}
+                      onClick={() => this.toggleShowHelpAddFact()}
+                    />
+                  ) : null}
                 </Col>
               </Row>
-            ) : null}
-            <Row>
-              <Col>
+              {this.state.showAddFactHelp ? (
+                <Row>
+                  <Col>
+                    <Alert color="info">
+                      <Row>
+                        <Col xl="11">
+                          <h2>Community Guidelines</h2>
+                          <ol type="i">
+                            <li>Title should be concise and descriptive</li>
+                            <li>
+                              Research existing posts before posting to see if
+                              there is any existing content that may provide you
+                              with some answers
+                            </li>
+                            <li>
+                              Use impartial language to remove potential biases
+                            </li>
+                            <li>
+                              Refer to the terms and conditions for more
+                              information
+                            </li>
+                          </ol>
+                        </Col>
+                        <Col xl="1">
+                          <Button
+                            color="info"
+                            onClick={() => this.toggleShowHelpAddFact()}
+                          >
+                            X
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Alert>
+                  </Col>
+                </Row>
+              ) : null}
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label for="title">Title</Label>
+                    <Input
+                      type="text"
+                      name="title"
+                      id="title"
+                      placeholder="Enter fact to be checked"
+                      onChange={this.onTextboxChangeTitle}
+                      value={title}
+                    />
+                  </FormGroup>
+                </Col>
                 <FormGroup>
-                  <Label for="title">Title</Label>
+                  <Label for="subject">Subject</Label>
                   <Input
-                    type="text"
-                    name="title"
-                    id="title"
-                    placeholder="Enter fact to be checked"
-                    onChange={this.onTextboxChangeTitle}
-                    value={title}
-                  />
+                    type="select"
+                    name="subject"
+                    id="subject"
+                    onChange={this.onSelectChangeSubject}
+                    value={subject}
+                  >
+                    <option>business</option>
+                    <option>environment</option>
+                    <option>politics</option>
+                    <option>science</option>
+                    <option>sport</option>
+                    <option>technology</option>
+                    <option>other</option>
+                  </Input>
                 </FormGroup>
-              </Col>
-              <FormGroup>
-                <Label for="subject">Subject</Label>
-                <Input
-                  type="select"
-                  name="subject"
-                  id="subject"
-                  onChange={this.onSelectChangeSubject}
-                  value={subject}
-                >
-                  <option>business</option>
-                  <option>environment</option>
-                  <option>politics</option>
-                  <option>science</option>
-                  <option>sport</option>
-                  <option>technology</option>
-                  <option>other</option>
-                </Input>
-              </FormGroup>
-              <Col />
-            </Row>
-            <Row>
-              <Col>
-                <FormGroup>
-                  <Label for="description">Add a description</Label>
-                  <Input
-                    type="textarea"
-                    name="description"
-                    id="description"
-                    onChange={this.onTextboxChangeDescription}
-                    value={description}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <br />
-            <br />
-            <Row>
-              <Col>
-                <Button
-                  color="primary"
-                  onClick={this.onAddFact}
-                  style={{ float: "right" }}
-                >
-                  <h4>Add Fact</h4>
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Container>
+                <Col />
+              </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label for="description">Description</Label>
+                    <Input
+                      type="textarea"
+                      name="description"
+                      id="description"
+                      placeholder="Enter a description"
+                      onChange={this.onTextboxChangeDescription}
+                      value={description}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <br />
+              <br />
+              <Row>
+                <Col>
+                  <Button
+                    color="primary"
+                    onClick={this.onAddFact}
+                    style={{ float: "right" }}
+                  >
+                    <h4>Add Fact</h4>
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Container>
+        </Jumbotron>
+      );
+    return (
+      <div style={{height:"700px"}}>
+      <Jumbotron
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)"
+        }}
+      >
+        <h2>Please log in to add a fact</h2>
+        <Link to="/login">
+          <Button
+            style={{
+              backgroundColor: "white",
+              color: "#007bff",
+              border: "2px solid #007bff"
+            }}
+          >
+            Go to Log In
+          </Button>
+        </Link>
       </Jumbotron>
-    )
-    return(
-      <Jumbotron>
-        Please Log in to continue
-      </Jumbotron>
-    )
+      </div>
+    );
   }
 }

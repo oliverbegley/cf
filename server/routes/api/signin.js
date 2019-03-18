@@ -181,11 +181,12 @@ module.exports = (app) => {
       _id: token,
       isDeleted: false
     }, (err, sessions) => {
+      var userIdS = "";
       if (err) {
         console.log(err);
         return res.send({
           success: false,
-          message: 'Error: Server error'
+          message: 'Error: Server error',
         });
       }
       if (sessions.length != 1) {
@@ -195,9 +196,11 @@ module.exports = (app) => {
         });
       } else {
         // DO ACTION
+        userIdS = sessions.userId;
         return res.send({
           success: true,
-          message: 'Good'
+          message: 'Good',
+          userId: sessions[0].userId
         });
       }
     });
