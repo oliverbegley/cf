@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getFromStorage } from "../../utils/storage.js";
+import loading from "../../../public/assets/gif/loading.gif";
 
 var getLocation = function(href) {
   var l = document.createElement("a");
@@ -30,7 +31,8 @@ const EvidenceRow = props => (
         height: "100%",
         padding: "5px",
         backgroundColor: "DB2929",
-        color: "black"
+        color: "black",
+        boxShadow: '7px 7px 5px grey'
       }}
     >
       <Row>
@@ -85,6 +87,10 @@ class Fact extends Component {
       this
     );
     this.onClickAddEvidence = this.onClickAddEvidence.bind(this);
+    this.onClickUpvote = this.onClickUpvote.bind(this);
+    this.onClickDownvote = this.onClickDownvote.bind(this);
+    this.onClickRemoveVote = this.onClickRemoveVote.bind(this);
+    this.onVote = this.onVote.bind(this);
 
     this.state = {
       factId: this.props.match.params.factid,
@@ -96,10 +102,12 @@ class Fact extends Component {
       addEvidenceSupporting: "",
       addEvidenceError: "",
       userId: "",
-      isLoading: false,
+      isLoading: true,
       isLoggedIn: false,
       showAddEvidence: false,
-      showAddEvidenceHelp: false
+      showAddEvidenceHelp: false,
+      voteMessage: "",
+      vote: ""
     };
   }
 
@@ -139,6 +147,7 @@ class Fact extends Component {
       addEvidenceURL,
       addEvidenceComment,
       addEvidenceSupporting,
+      userId,
       factId
     } = this.state;
     //send
@@ -152,7 +161,7 @@ class Fact extends Component {
         url: addEvidenceURL,
         comment: addEvidenceComment,
         supporting: addEvidenceSupporting,
-        user: "123"
+        user: userId
       })
     })
       .then(res => res.json())
@@ -175,9 +184,11 @@ class Fact extends Component {
       .then(json => {
         this.setState({
           fact: json,
-          allEvidence: json.evidence
+          allEvidence: json.evidence,
+          isLoading: false
         });
       });
+
     const obj = getFromStorage("the_main_app");
     if (obj && obj.token) {
       const { token } = obj;
@@ -198,6 +209,44 @@ class Fact extends Component {
     }
   }
 
+  onVote() {
+    this.setState({ isLoading: true });
+    const obj = getFromStorage("the_main_app");
+    var token = obj.token;
+    fetch("/api/fact/" + this.state.factId + "/vote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        vote: this.state.vote,
+        token: token
+      })
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          this.setState({ isLoading: false, voteMessage: json.message });
+          console.log(json);
+        } else {
+          this.setState({ isLoading: false });
+          console.log(json);
+        }
+      });
+  }
+
+  onClickUpvote() {
+    this.setState({ vote:"up"}, this.onVote);
+  }
+  
+  onClickDownvote() {
+    this.setState({ vote:"down"}, this.onVote);
+  }
+
+  onClickRemoveVote() {
+    this.setState({ vote:""}, this.onVote);
+  }
+
   render() {
     const {
       isLoading,
@@ -213,7 +262,20 @@ class Fact extends Component {
     var B = dateobj.toString().substring(0, 15);
 
     if (isLoading) {
-      return <div>Not just yet chief</div>;
+      return (
+        <div>
+          loading
+          <img
+            src={loading}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)"
+            }}
+          />
+        </div>
+      );
     }
 
     if (!isLoading) {
@@ -250,13 +312,49 @@ class Fact extends Component {
                 </Col>
                 <Col xs="7">{this.state.fact.description}</Col>
                 <Col xs="3">
-                  <Button outline color="success">
-                    +
-                  </Button>
-                  <span style={{ margin: "0px 10px 0px 10px" }} />
-                  <Button outline color="danger">
-                    -
-                  </Button>
+                  <Row>
+                    <Button
+                      outline
+                      color="success"
+                      onClick={this.onClickUpvote}
+                    >
+                      +
+                    </Button>
+                    <Badge style={{ margin: "0px 10px 0px 10px" }}>
+                      <h2>
+                        {this.state.fact.upvoters.length -
+                          this.state.fact.downvoters.length}
+                      </h2>
+                    </Badge>
+                    <Button
+                      outline
+                      color="danger"
+                      onClick={this.onClickDownvote}
+                    >
+                      -
+                    </Button>
+                  </Row>
+                  <br />
+                  <Row>
+                    {!this.state.isLoggedIn ? (
+                      <div style={{ float: "right" }}>
+                        <Link to="/login">
+                          <Button color="secondary">
+                            You must be logged in to vote
+                          </Button>
+                        </Link>
+                      </div>
+                    ) : !this.state.showAddEvidence ? (
+                      <div>
+                        <div style={{ float: "right" }}>
+                          {this.state.voteMessage ? (
+                            <Alert> {this.state.voteMessage}</Alert>
+                          ) : null}
+                          <Button onClick={this.onClickRemoveVote}>remove vote</Button>
+                        </div>
+                      </div>
+                    ) : null}
+                  </Row>
                 </Col>
               </Row>
               <hr />
@@ -267,10 +365,13 @@ class Fact extends Component {
                 <Col>
                   {!this.state.isLoggedIn ? (
                     <div style={{ float: "right" }}>
-                      <Link to="/login"><Button color='warning'>You must be logged in to add evidence</Button></Link>
+                      <Link to="/login">
+                        <Button color="secondary">
+                          You must be logged in to add evidence
+                        </Button>
+                      </Link>
                     </div>
-                  ) : (
-                    !this.state.showAddEvidence ? (
+                  ) : !this.state.showAddEvidence ? (
                     <div>
                       <div style={{ float: "right" }}>
                         <Button
@@ -281,9 +382,7 @@ class Fact extends Component {
                         </Button>
                       </div>
                     </div>
-                  ) : null
-                  )}
-                  
+                  ) : null}
                 </Col>
               </Row>
               {this.state.showAddEvidence ? (

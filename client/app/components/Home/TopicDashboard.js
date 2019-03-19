@@ -26,7 +26,7 @@ class TopicDashboard extends React.Component {
         
           <Col xs='12' md='6'>
           <Link to={{ pathname: "/searchresults", search:"?subject=business"}}>
-            <Card inverse>
+            <Card inverse style={{boxShadow:"5px 5px 5px grey"}}>
               <CardImg width="100%" src={businessImage} alt="Card image cap"/>
               <CardImgOverlay>
                 <CardTitle><Badge color='light'><h4>Business</h4></Badge></CardTitle>
@@ -35,7 +35,7 @@ class TopicDashboard extends React.Component {
             </Link>
             <br />
             <Link to={{ pathname: "/searchresults", search:"?subject=politics"}}>
-            <Card inverse>
+            <Card inverse style={{boxShadow:"5px 5px 5px grey"}}>
               <CardImg width="100%" src={politicsImage} alt="Card image cap" />
               <CardImgOverlay>
                 <CardTitle><Badge color='light'><h4>Politics</h4></Badge></CardTitle>
@@ -44,7 +44,7 @@ class TopicDashboard extends React.Component {
             </Link>
             <br />
             <Link to={{ pathname: "/searchresults", search:"?subject=sport"}}>
-            <Card inverse>
+            <Card inverse style={{boxShadow:"5px 5px 5px grey"}}>
               <CardImg width="100%" src={sportImage} alt="Card image cap" />
               <CardImgOverlay>
                 <CardTitle><Badge color='light'><h4>Sport</h4></Badge></CardTitle>
@@ -54,7 +54,7 @@ class TopicDashboard extends React.Component {
           </Col>
           <Col xs='12' md='6'>
           <Link to={{ pathname: "/searchresults", search:"?subject=environment"}}>
-          <Card inverse>
+          <Card inverse style={{boxShadow:"5px 5px 5px grey"}}>
             <CardImg width="100%" src={environmentImage} alt="Card image cap" />
             <CardImgOverlay>
               <CardTitle><Badge color='light'><h4>Environment</h4></Badge></CardTitle>
@@ -63,7 +63,7 @@ class TopicDashboard extends React.Component {
           </Link>
           <br />
           <Link to={{ pathname: "/searchresults", search:"?subject=science"}}>
-          <Card inverse>
+          <Card inverse style={{boxShadow:"5px 5px 5px grey"}}>
             <CardImg width="100%" src={scienceImage} alt="Card image cap" />
             <CardImgOverlay>
               <CardTitle><Badge color='light'><h4>Science</h4></Badge></CardTitle>
@@ -72,7 +72,7 @@ class TopicDashboard extends React.Component {
           </Link>
           <br />
           <Link to={{ pathname: "/searchresults", search:"?subject=technology"}}>
-          <Card inverse>
+          <Card inverse style={{boxShadow:"5px 5px 5px grey"}}>
             <CardImg width="100%" src={technologyImage} alt="Card image cap" />
             <CardImgOverlay>
               <CardTitle><Badge color='light'><h4>Technology</h4></Badge></CardTitle>

@@ -46,7 +46,6 @@ class LogIn extends Component {
     const obj = getFromStorage("the_main_app");
     if (obj && obj.token) {
       const { token } = obj;
-      console.log()
       // Verify token
       fetch("/api/account/verify?token=" + token)
         .then(res => res.json())

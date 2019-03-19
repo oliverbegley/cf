@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "whatwg-fetch";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Jumbotron,
   Container,
@@ -33,7 +33,7 @@ const facts = [
     creationDate: "12/03/04",
     subject: "science",
     upvoters: ["Peter", "Graham", "Joel"],
-    downvoters: ["Saul", "Alex", "PublicEnemE","Saul", "Alex", "PublicEnemE"],
+    downvoters: ["Saul", "Alex", "PublicEnemE", "Saul", "Alex", "PublicEnemE"],
     evidence: ["evidence1", "evidence2", "evidence2"]
   },
   {
@@ -44,7 +44,17 @@ const facts = [
     userId: "",
     creationDate: "09/12/18",
     subject: "sport",
-    upvoters: ["Iain", "Craig", "Bob", "Saul", "Alex", "PublicEnemE", "Saul", "Alex", "PublicEnemE"],
+    upvoters: [
+      "Iain",
+      "Craig",
+      "Bob",
+      "Saul",
+      "Alex",
+      "PublicEnemE",
+      "Saul",
+      "Alex",
+      "PublicEnemE"
+    ],
     downvoters: ["Lain", "Garry", "Shaun"],
     evidence: ["e1", "e2", "e3"]
   },
@@ -56,7 +66,20 @@ const facts = [
     userId: "",
     creationDate: "29/02/2019",
     subject: "politics",
-    upvoters: ["Alan", "Alice", "Arvile","Alan", "Alice", "Arvile","Alan", "Alice", "Arvile","Alan", "Alice", "Arvile" ],
+    upvoters: [
+      "Alan",
+      "Alice",
+      "Arvile",
+      "Alan",
+      "Alice",
+      "Arvile",
+      "Alan",
+      "Alice",
+      "Arvile",
+      "Alan",
+      "Alice",
+      "Arvile"
+    ],
     downvoters: ["Adonis", "Arge", "Axl"],
     evidence: ["d1", "d2", "dnsands"]
   }
@@ -76,7 +99,7 @@ const FactRow = props => (
       </h3>
     </CardTitle>
     <CardText>{props.fact.description}</CardText>
-    
+
     <Button
       color="primary"
       style={{ maxWidth: "50%", justifyContent: "center" }}
@@ -93,17 +116,17 @@ function FactTable(props) {
   return <div>{factRows}</div>;
 }
 
-function OverallScore(array1,array2) {
+function OverallScore(array1, array2) {
   var score = array1.length - array2.length;
   console.log(score);
   badgeColor = "";
-  if(score > 0){
-    badgeColor ="success";
+  if (score > 0) {
+    badgeColor = "success";
   }
-  if(score < 0){
+  if (score < 0) {
     badgeColor = "danger";
   }
-  if(score === 0){
+  if (score === 0) {
     badgeColor = "secondary";
   }
   return <Badge color={badgeColor}>Success</Badge>;
@@ -137,7 +160,7 @@ function EvidenceTable(props) {
 class ProfileDashboard extends Component {
   constructor(props) {
     super();
-    this.state = { facts: [] };
+    this.state = { facts: [], isLoading: false };
   }
 
   componentDidMount() {
@@ -151,7 +174,13 @@ class ProfileDashboard extends Component {
   }
 
   render() {
+
+    const {
+      isLoading
+    } = this.state;
+    if(!isLoading){
     return (
+
       <Jumbotron style={{ margin: "20px" }}>
         <Container>
           <Row>
@@ -181,7 +210,12 @@ class ProfileDashboard extends Component {
           <hr />
           <Row>
             <Col>
-              <div style={{borderRight: '1px solid rgba(0,0,0,.1)', paddingRight:'30px'}}>
+              <div
+                style={{
+                  borderRight: "1px solid rgba(0,0,0,.1)",
+                  paddingRight: "30px"
+                }}
+              >
                 <h2>Posting history</h2>
                 <EvidenceTable />
               </div>
@@ -193,7 +227,10 @@ class ProfileDashboard extends Component {
           </Row>
         </Container>
       </Jumbotron>
-    );
+    )}
+    if(isLoading){
+      <div>I'm loading</div>
+    }
   }
 }
 
