@@ -193,7 +193,7 @@ module.exports = app => {
 
   app.get("/api/getfactsuserposted", (req, res, next) => {
     let postUserId = req.query.postuserid;
-    Fact.find({userId: postUserId})
+    Fact.find({ userId: postUserId })
       .sort([["creationDate", -1]])
       .limit()
       .exec()
@@ -202,8 +202,8 @@ module.exports = app => {
   });
 
   app.get("/api/getfactsuservoted", (req, res, next) => {
-    let postUserId = req.query.postuserid;
-    Fact.find({userId: postUserId})
+    let voteUserId = req.query.voteuserid;
+    Fact.find({ $or: [{ upvoters: voteUserId }, { downvoters: voteUserId }] })
       .sort([["creationDate", -1]])
       .limit()
       .exec()
