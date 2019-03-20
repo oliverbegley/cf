@@ -212,7 +212,7 @@ class LogIn extends Component {
     return (
       <div>
         <p>Account</p>
-        <ProfileDashboard />
+        <h2>SIGNED IN</h2>
         <button onClick={this.logout}>Logout</button>
       </div>
     );

@@ -35,13 +35,15 @@ function getDescriptionShort(description) {
 }
 
 function getFactVoteIcon(arrayUp, arrayDown) {
-  if(arrayUp.length > arrayDown.length){
-    return(<img src={upVoteImage} style={{height:"20px",float:"right"}}/>)
+  if (arrayUp.length > arrayDown.length) {
+    return <img src={upVoteImage} style={{ height: "20px", float: "right" }} />;
   }
-  if(arrayUp.length < arrayDown.length){
-    return(<img src={downVoteImage} style={{height:"20px",float:"right"}}/>)
+  if (arrayUp.length < arrayDown.length) {
+    return (
+      <img src={downVoteImage} style={{ height: "20px", float: "right" }} />
+    );
   }
-  return(<img src={mixedImage} style={{height:"20px",float:"right"}}/>)
+  return <img src={mixedImage} style={{ height: "20px", float: "right" }} />;
 }
 
 const FactRow = props => (
@@ -49,7 +51,12 @@ const FactRow = props => (
     body
     outline
     color="primary"
-    style={{ width: "100%", marginTop: "10px", boxShadow: "5px 5px 5px grey", backgroundColor:'white'}}
+    style={{
+      width: "100%",
+      marginTop: "10px",
+      boxShadow: "5px 5px 5px grey",
+      backgroundColor: "white"
+    }}
   >
     <CardTitle>
       <h3>
@@ -60,7 +67,7 @@ const FactRow = props => (
       </h3>
     </CardTitle>
     <CardText>{getDescriptionShort(props.fact.description)}</CardText>
-    <Link to={"/fact/"+ props.fact._id}>
+    <Link to={"/fact/" + props.fact._id}>
       <Button
         color="primary"
         style={{ maxWidth: "50%", justifyContent: "center" }}
@@ -81,11 +88,20 @@ function FactTable(props) {
 class ProfileDashboard extends Component {
   constructor(props) {
     super();
-    this.state = { postFacts: [], voteFacts: [], isLoading: false };
+    this.state = {
+      postFacts: [],
+      voteFacts: [],
+      isLoading: false,
+      userId: ""
+    };
   }
 
   componentDidMount() {
-    fetch("/api/getfactsuserposted?postuserid=5c8e94c75ef5d98f5645cd69")
+    this.setState({userId: this.props.match.params.userid}, this.loadData);
+  }
+
+  loadData(){
+    fetch("/api/getfactsuserposted?postuserid=" + this.state.userId)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -93,7 +109,7 @@ class ProfileDashboard extends Component {
           isLoading: false
         });
       });
-    fetch("/api/getfactsuservoted?voteuserid=5c8e94c75ef5d98f5645cd69")
+    fetch("/api/getfactsuservoted?voteuserid="+ this.state.userId)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -101,10 +117,11 @@ class ProfileDashboard extends Component {
           isLoading: false
         });
       });
+      console.log(this.state.userId);
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading,userId } = this.state;
     if (!isLoading) {
       return (
         <Jumbotron style={{ margin: "20px" }}>
