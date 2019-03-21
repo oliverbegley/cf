@@ -208,20 +208,24 @@ module.exports = app => {
     var firstName = "";
     var surname = "";
     var email = "";
-    User.findOne({
-      _id: userId
-    }, (err, user) => {
-      signUpDate = user.signUpDate;
-      firstName = user.firstName;
-      surname = user.surname;
-      email = user.email;
-    }).exec()
-    .catch(err => next(err));
+    User.findOne(
+      {
+        _id: userId
+      },
+      (err, user) => {
+        signUpDate = user.signUpDate;
+        firstName = user.firstName;
+        surname = user.surname;
+        email = user.email;
+      }
+    )
+      .exec()
+      .catch(err => next(err));
 
     //Get the post count
     Fact.count({ userId: userId }, function(err, count) {
       postCount = count;
-    }).exec()
+    }).exec();
 
     // Get Vote Count
     Fact.find({ $or: [{ upvoters: userId }, { downvoters: userId }] }, function(
@@ -239,5 +243,45 @@ module.exports = app => {
         email: email
       });
     });
+  });
+
+  app.get("/api/getpublicstatistics", (req, res, next) => {
+    var subjectCounts = [];
+    var totalCount = 0;
+    var userCount = 0;
+
+    //get total facts
+    Fact.count({}, function(err, count) {
+      totalCount = count;
+    })
+      .exec()
+      .then(function() {
+        totalCount = totalCount;
+      })
+      .catch(err => next(err));
+
+    //get total users
+    User.count({}, function(err, count) {
+      userCount = count;
+    })
+      .exec()
+      .then(function() {
+        userCount = userCount;
+      })
+      .catch(err => next(err));
+    Fact.aggregate(
+      [{ $group: { _id: "$subject", total: { $sum: 1 } } }],
+      function(err, res) {
+        subjectCounts = res;
+      }
+    )
+      .exec()
+      .then(function() {
+        return res.send({
+          subjectCounts: subjectCounts,
+          userCount: userCount,
+          postCount: totalCount
+        });
+      });
   });
 };
