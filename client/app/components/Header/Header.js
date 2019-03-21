@@ -57,7 +57,7 @@ export default class Header extends React.Component {
                 <Link to={'/profile/'+ this.state.userId}><NavLink>Profile</NavLink></Link>
               </NavItem>
               <NavItem>
-                <Link to='/stats/'><NavLink>Statistics</NavLink></Link>
+                <Link to='/statistics/'><NavLink>Statistics</NavLink></Link>
               </NavItem>
               <NavItem>
                 <Link to='/stats/'><NavLink>Info</NavLink></Link>

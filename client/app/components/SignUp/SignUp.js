@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "whatwg-fetch";
-import { setInStorage, getFromStorage } from "../../utils/storage.js";
+import { getFromStorage } from "../../utils/storage.js";
 import {
   Alert,
   Button,
@@ -52,7 +52,6 @@ class Home extends Component {
       this
     );
 
-    this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.logout = this.logout.bind(this);
   }
@@ -146,44 +145,6 @@ class Home extends Component {
         }
       });
       console.log(this.state);
-  }
-
-  onSignIn() {
-    // Grab state
-    const { signInEmail, signInPassword } = this.state;
-    this.setState({
-      isLoading: true
-    });
-    // Post request to backend
-    fetch("/api/facts/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: signInEmail,
-        password: signInPassword
-      })
-    })
-      .then(res => res.json())
-      .then(json => {
-        console.log("json", json);
-        if (json.success) {
-          setInStorage("the_main_app", { token: json.token });
-          this.setState({
-            signInError: json.message,
-            isLoading: false,
-            signInPassword: "",
-            signInEmail: "",
-            token: json.token
-          });
-        } else {
-          this.setState({
-            signInError: json.message,
-            isLoading: false
-          });
-        }
-      });
   }
 
   logout() {
