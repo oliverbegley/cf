@@ -52,7 +52,7 @@ class LogIn extends Component {
         .then(json => {
           if (json.success) {
             this.setState({
-              token,
+              token: token,
               isLoading: false
             });
           } else {
@@ -105,7 +105,7 @@ class LogIn extends Component {
         console.log("User ID =" ,userId);
         console.log(typeof userId);
         if (json.success) {
-          setInStorage("the_main_app", { token: json.token });
+          setInStorage("the_main_app", { token: json.token, userId: userId});
           this.setState({
             signInError: json.message,
             isLoading: false,

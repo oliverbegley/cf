@@ -36,7 +36,7 @@ const EvidenceRow = props => (
       }}
     >
       <Row>
-        <Col sm="2">{props.evidence.user}</Col>
+        <Col sm="2"><Link to={"/profile/"+props.evidence.user}> view poster</Link></Col>
         <Col>
           <h4>{props.evidence.title}</h4>
         </Col>
@@ -307,10 +307,9 @@ class Fact extends Component {
               <hr />
               <Row style={{ color: "grey" }} />
               <Row>
-                <Col xs="2">
-                  <b>Description: </b>
+                <Col xs="9">
+                  <b>Description: </b>{this.state.fact.description}
                 </Col>
-                <Col xs="7">{this.state.fact.description}</Col>
                 <Col xs="3">
                   <Row>
                     <Button

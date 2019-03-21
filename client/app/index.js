@@ -22,8 +22,7 @@ import SearchResults from './components/App/SearchResults/SearchResults';
 import Fact from './components/Fact/Fact'
 import ProfileDashboard from './components/ProfileDashboard/ProfileDashboard';
 import AddFact from './components/AddFact/AddFact';
-
-
+import Statistics from './components/Statistics/Statistics';
 
 render((
   <Router>
@@ -36,6 +35,7 @@ render((
         <Route path="/searchresults" component={SearchResults}/>
         <Route path="/fact/addFact" component={AddFact}/>
         <Route path="/fact/:factid" component={Fact} />
+        <Route path="/statistics" component={Statistics} />
         <Route component={NotFound}/>
       </Switch>
     </App>

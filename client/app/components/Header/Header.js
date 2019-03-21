@@ -16,12 +16,12 @@ import logo from '../../../public/assets/img/comfactLogo.jpg';
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
-
+    this.onClickProfile = this.onClickProfile.bind(this);
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      query: '',
-      token: getFromStorage("the_main_app").token
+      token: "",
+      userId: ""
     };
   }
 
@@ -30,6 +30,10 @@ export default class Header extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+
+  onClickProfile(){
+    this.setState({userId: getFromStorage("the_main_app").userId});
   }
 
   render() {
@@ -50,7 +54,13 @@ export default class Header extends React.Component {
                 <Link to='/signup/'><NavLink>Sign Up</NavLink></Link>
               </NavItem>
               <NavItem>
-                <Link to='/profile/1'><NavLink>profile</NavLink></Link>
+                <Link to={'/profile/'+ this.state.userId}><NavLink>Profile</NavLink></Link>
+              </NavItem>
+              <NavItem>
+                <Link to='/stats/'><NavLink>Statistics</NavLink></Link>
+              </NavItem>
+              <NavItem>
+                <Link to='/stats/'><NavLink>Info</NavLink></Link>
               </NavItem>
               <NavItem>
                 <Link to="/fact/addfact">

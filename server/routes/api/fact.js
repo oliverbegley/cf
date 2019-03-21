@@ -1,6 +1,7 @@
 const Fact = require("../../models/Fact.model");
 const Evidence = require("../../models/Evidence.model");
 const UserSession = require("../../models/UserSession.model");
+const User = require("../../models/User.model");
 let ObjectID = require("mongodb").ObjectID;
 
 module.exports = app => {
@@ -112,18 +113,6 @@ module.exports = app => {
     });
   });
 
-  app.get("/api/fact/:queryname/:querysubject", (req, res, next) => {
-    var queryname = req.params.queryname;
-    var querysubject = req.params.querysubject;
-    var num = parseInt(req.params.num);
-    Fact.find({ title: queryname })
-      .sort([["creationDate", -1]])
-      .limit(10)
-      .exec()
-      .then(facts => res.json(facts))
-      .catch(err => next(err));
-  });
-
   app.get("/api/fact/", (req, res, next) => {
     let subject = req.query.subject;
     let searchstring = req.query.searchstring;
@@ -209,5 +198,46 @@ module.exports = app => {
       .exec()
       .then(fact => res.json(fact))
       .catch(err => next(err));
+  });
+
+  app.get("/api/fact/getuserstats/:userid", (req, res, next) => {
+    let userId = req.params.userid;
+    var postCount = 0;
+    var voteCount = 0;
+    var signUpDate = "";
+    var firstName = "";
+    var surname = "";
+    var email = "";
+    User.findOne({
+      _id: userId
+    }, (err, user) => {
+      signUpDate = user.signUpDate;
+      firstName = user.firstName;
+      surname = user.surname;
+      email = user.email;
+    }).exec()
+    .catch(err => next(err));
+
+    //Get the post count
+    Fact.count({ userId: userId }, function(err, count) {
+      postCount = count;
+    }).exec()
+
+    // Get Vote Count
+    Fact.find({ $or: [{ upvoters: userId }, { downvoters: userId }] }, function(
+      err,
+      fact
+    ) {
+      voteCount = fact.length;
+    }).then(function() {
+      return res.send({
+        postCount: postCount,
+        voteCount: voteCount,
+        signUpDate: signUpDate,
+        firstName: firstName,
+        surname: surname,
+        email: email
+      });
+    });
   });
 };

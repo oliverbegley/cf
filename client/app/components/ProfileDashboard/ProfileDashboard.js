@@ -54,8 +54,7 @@ const FactRow = props => (
     style={{
       width: "100%",
       marginTop: "10px",
-      boxShadow: "5px 5px 5px grey",
-      backgroundColor: "white"
+      boxShadow: "5px 5px 5px grey"
     }}
   >
     <CardTitle>
@@ -92,36 +91,42 @@ class ProfileDashboard extends Component {
       postFacts: [],
       voteFacts: [],
       isLoading: false,
-      userId: ""
+      userId: "",
+      userStats: {}
     };
   }
 
   componentDidMount() {
-    this.setState({userId: this.props.match.params.userid}, this.loadData);
+    this.setState({ userId: this.props.match.params.userid }, this.loadData);
   }
 
-  loadData(){
+  loadData() {
     fetch("/api/getfactsuserposted?postuserid=" + this.state.userId)
       .then(res => res.json())
       .then(json => {
         this.setState({
-          postFacts: json,
-          isLoading: false
+          postFacts: json
         });
       });
-    fetch("/api/getfactsuservoted?voteuserid="+ this.state.userId)
+    fetch("/api/getfactsuservoted?voteuserid=" + this.state.userId)
       .then(res => res.json())
       .then(json => {
         this.setState({
-          voteFacts: json,
+          voteFacts: json
+        });
+      });
+    fetch("/api/fact/getuserstats/" + this.state.userId)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          userStats: json,
           isLoading: false
         });
       });
-      console.log(this.state.userId);
   }
 
   render() {
-    const { isLoading,userId } = this.state;
+    const { isLoading, userId } = this.state;
     if (!isLoading) {
       return (
         <Jumbotron style={{ margin: "20px" }}>
@@ -130,7 +135,7 @@ class ProfileDashboard extends Component {
               <h1>Profile Dashboard</h1>
             </Row>
             <Row>
-              <Col>
+              <Col sm="2">
                 <img
                   src={placeholderImage}
                   style={{
@@ -143,10 +148,37 @@ class ProfileDashboard extends Component {
               </Col>
               <Col>
                 <Row>
-                  <b>Name:</b>&nbsp;{user.surname}, {user.firstName}
+                  <Col>
+                    <Row>
+                      <b>Name:</b>&nbsp;{this.state.userStats.firstName},{" "}
+                      {this.state.userStats.surname}
+                    </Row>
+                    <Row>
+                      <b>Email:</b>&nbsp;{this.state.userStats.email}
+                    </Row>
+                    <Row>
+                      <b>Member since:</b>&nbsp;
+                      {this.state.userStats.signUpDate}
+                    </Row>
+                  </Col>
                 </Row>
                 <Row>
-                  <b>Email:</b>&nbsp;{user.email}
+                  <Col>
+                    <Row>
+                      <h4>Post Count</h4>
+                    </Row>
+                    <Row>
+                      <h3>{this.state.userStats.postCount}</h3>
+                    </Row>
+                  </Col>
+                  <Col>
+                    <Row>
+                      <h4>Vote Count</h4>
+                    </Row>
+                    <Row>
+                      <h3>{this.state.userStats.voteCount}</h3>
+                    </Row>
+                  </Col>
                 </Row>
               </Col>
             </Row>
